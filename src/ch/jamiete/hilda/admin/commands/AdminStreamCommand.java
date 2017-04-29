@@ -120,10 +120,6 @@ public class AdminStreamCommand extends ChannelCommand {
 
     @Override
     public void execute(final Message message, final String[] args, final String label) {
-        if (!plugin.canRun(message)) {
-            return;
-        }
-
         if (args.length != 2) {
             this.usage(message, "<channel_id> <url>", label);
             return;

@@ -40,10 +40,6 @@ public class AdminConfigCommand extends ChannelCommand {
 
     @Override
     public void execute(Message message, String[] args, String label) {
-        if (!this.plugin.canRun(message)) {
-            return;
-        }
-
         Configuration config = this.hilda.getConfigurationManager().getConfiguration(this.plugin);
 
         if (args.length == 0) {

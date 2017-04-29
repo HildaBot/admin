@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.Optional;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
-import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelCommand;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
@@ -28,12 +27,9 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 public class AdminBroadcastCommand extends ChannelCommand {
-    private AdminPlugin plugin;
 
-    public AdminBroadcastCommand(Hilda hilda, AdminPlugin plugin) {
+    public AdminBroadcastCommand(Hilda hilda) {
         super(hilda);
-
-        this.plugin = plugin;
 
         this.setName("broadcast");
         this.setAliases(Arrays.asList(new String[] { "announce" }));
@@ -42,10 +38,6 @@ public class AdminBroadcastCommand extends ChannelCommand {
 
     @Override
     public void execute(Message message, String[] arguments, String label) {
-        if (!this.plugin.canRun(message)) {
-            return;
-        }
-
         for (final Guild guild : this.hilda.getBot().getGuilds()) {
             final TextChannel channel = guild.getPublicChannel();
             final Member self = guild.getMember(this.hilda.getBot().getSelfUser());

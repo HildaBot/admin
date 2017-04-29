@@ -16,7 +16,6 @@
 package ch.jamiete.hilda.admin.commands;
 
 import ch.jamiete.hilda.Hilda;
-import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
@@ -24,12 +23,9 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
 
 public class AdminRolesCommand extends ChannelCommand {
-    private AdminPlugin plugin;
 
-    protected AdminRolesCommand(Hilda hilda, AdminPlugin plugin) {
+    protected AdminRolesCommand(Hilda hilda) {
         super(hilda);
-
-        this.plugin = plugin;
 
         this.setName("roles");
         this.setDescription("Lists a server's roles.");
@@ -37,10 +33,6 @@ public class AdminRolesCommand extends ChannelCommand {
 
     @Override
     public void execute(Message message, String[] arguments, String label) {
-        if (!this.plugin.canRun(message)) {
-            return;
-        }
-
         Guild guild = null;
 
         if (arguments.length == 1) {

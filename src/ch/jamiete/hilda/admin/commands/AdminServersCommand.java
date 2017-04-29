@@ -17,7 +17,6 @@ package ch.jamiete.hilda.admin.commands;
 
 import java.util.Arrays;
 import ch.jamiete.hilda.Hilda;
-import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelCommand;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.MessageBuilder.Formatting;
@@ -25,12 +24,9 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 
 public class AdminServersCommand extends ChannelCommand {
-    private AdminPlugin plugin;
 
-    public AdminServersCommand(Hilda hilda, AdminPlugin plugin) {
+    public AdminServersCommand(Hilda hilda) {
         super(hilda);
-
-        this.plugin = plugin;
 
         this.setName("servers");
         this.setAliases(Arrays.asList(new String[] { "server", "serverlist", "listservers" }));
@@ -39,10 +35,6 @@ public class AdminServersCommand extends ChannelCommand {
 
     @Override
     public void execute(Message message, String[] arguments, String label) {
-        if (!this.plugin.canRun(message)) {
-            return;
-        }
-
         final MessageBuilder mb = new MessageBuilder();
 
         mb.append("I'm on " + this.hilda.getBot().getGuilds().size() + " servers:\n");

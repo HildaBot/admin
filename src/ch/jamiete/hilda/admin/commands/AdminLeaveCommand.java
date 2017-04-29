@@ -17,18 +17,14 @@ package ch.jamiete.hilda.admin.commands;
 
 import java.util.Arrays;
 import ch.jamiete.hilda.Hilda;
-import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelCommand;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 
 public class AdminLeaveCommand extends ChannelCommand {
-    private AdminPlugin plugin;
 
-    protected AdminLeaveCommand(Hilda hilda, AdminPlugin plugin) {
+    protected AdminLeaveCommand(Hilda hilda) {
         super(hilda);
-
-        this.plugin = plugin;
 
         this.setName("leave");
         this.setAliases(Arrays.asList(new String[] { "quit", "part" }));
@@ -37,10 +33,6 @@ public class AdminLeaveCommand extends ChannelCommand {
 
     @Override
     public void execute(Message message, String[] arguments, String label) {
-        if (!this.plugin.canRun(message)) {
-            return;
-        }
-
         if (arguments.length != 1) {
             this.usage(message, "leave <id>", label);
             return;

@@ -17,19 +17,15 @@ package ch.jamiete.hilda.admin.commands;
 
 import java.util.Arrays;
 import ch.jamiete.hilda.Hilda;
-import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.admin.runnables.OwnerInviteTask;
 import ch.jamiete.hilda.commands.ChannelCommand;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 
 public class AdminInviteCommand extends ChannelCommand {
-    private AdminPlugin plugin;
 
-    protected AdminInviteCommand(Hilda hilda, AdminPlugin plugin) {
+    protected AdminInviteCommand(Hilda hilda) {
         super(hilda);
-
-        this.plugin = plugin;
 
         this.setName("invite");
         this.setAliases(Arrays.asList(new String[] { "inv" }));
@@ -38,10 +34,6 @@ public class AdminInviteCommand extends ChannelCommand {
 
     @Override
     public void execute(Message message, String[] arguments, String label) {
-        if (!this.plugin.canRun(message)) {
-            return;
-        }
-
         if (arguments.length != 1) {
             this.usage(message, "invite <id>", label);
             return;
