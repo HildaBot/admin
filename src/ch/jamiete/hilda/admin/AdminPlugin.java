@@ -15,10 +15,12 @@
  *******************************************************************************/
 package ch.jamiete.hilda.admin;
 
+import java.util.logging.Handler;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Start;
 import ch.jamiete.hilda.admin.commands.AdminBaseCommand;
 import ch.jamiete.hilda.admin.commands.SetupCommand;
+import ch.jamiete.hilda.admin.log.LogReporter;
 import ch.jamiete.hilda.configuration.Configuration;
 import ch.jamiete.hilda.music.MusicManager;
 import ch.jamiete.hilda.music.MusicPlugin;
@@ -82,6 +84,15 @@ public class AdminPlugin extends HildaPlugin {
         if (this.role == null || this.channel == null) {
             Hilda.getLogger().warning("Not currently configured correctly.");
         }
+
+        for (Handler h : Hilda.getLogger().getHandlers()) {
+            if (h instanceof LogReporter) {
+                h.close();
+                Hilda.getLogger().removeHandler(h);
+            }
+        }
+
+        Hilda.getLogger().addHandler(new LogReporter(this.channel));
     }
 
     public MusicManager getMusicManager() {
