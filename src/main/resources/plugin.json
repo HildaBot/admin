@@ -3,7 +3,7 @@
     "mainClass": "ch.jamiete.hilda.admin.AdminPlugin",
     "version": "1.0.0",
     "author": "jamietech",
-    "depend": [
+    "dependencies": [
         "music"
     ]
 }
