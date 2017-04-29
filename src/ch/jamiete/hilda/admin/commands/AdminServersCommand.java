@@ -17,16 +17,20 @@ package ch.jamiete.hilda.admin.commands;
 
 import java.util.Arrays;
 import ch.jamiete.hilda.Hilda;
+import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelCommand;
 import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.MessageBuilder.Formatting;
+import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 
 public class AdminServersCommand extends ChannelCommand {
+    private final AdminPlugin plugin;
 
-    public AdminServersCommand(final Hilda hilda) {
+    public AdminServersCommand(final Hilda hilda, final AdminPlugin plugin) {
         super(hilda);
+
+        this.plugin = plugin;
 
         this.setName("servers");
         this.setAliases(Arrays.asList(new String[] { "server", "serverlist", "listservers" }));
@@ -41,14 +45,10 @@ public class AdminServersCommand extends ChannelCommand {
 
         for (final Guild guild : this.hilda.getBot().getGuilds()) {
             mb.append("\n");
-            mb.append(guild.getName(), Formatting.BOLD);
-            mb.append(" " + guild.getId() + " — ");
-            mb.append(guild.getMembers().size() + " members, ");
-            mb.append(guild.getTextChannels().size() + " text channels, ");
-            mb.append(guild.getVoiceChannels().size() + " voice channels");
+            mb.append(this.plugin.getServerInfo(guild));
         }
 
-        this.reply(message, mb.build());
+        mb.buildAll(SplitPolicy.NEWLINE).forEach(m -> this.reply(message, m));
     }
 
 }

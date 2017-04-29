@@ -20,11 +20,15 @@ import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Start;
 import ch.jamiete.hilda.admin.commands.AdminBaseCommand;
 import ch.jamiete.hilda.admin.commands.SetupCommand;
+import ch.jamiete.hilda.admin.listeners.ServerJoinListener;
 import ch.jamiete.hilda.admin.log.LogReporter;
 import ch.jamiete.hilda.configuration.Configuration;
 import ch.jamiete.hilda.music.MusicManager;
 import ch.jamiete.hilda.music.MusicPlugin;
 import ch.jamiete.hilda.plugins.HildaPlugin;
+import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.core.MessageBuilder.Formatting;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -73,10 +77,25 @@ public class AdminPlugin extends HildaPlugin {
         return this.role;
     }
 
+    public String getServerInfo(final Guild guild) {
+        final MessageBuilder mb = new MessageBuilder();
+
+        mb.append(guild.getName(), Formatting.BOLD);
+        mb.append(" (" + guild.getId() + ")", Formatting.ITALICS);
+        mb.append(" — ");
+        mb.append(guild.getMembers().size() + " members, ");
+        mb.append(guild.getTextChannels().size() + " text channels, ");
+        mb.append(guild.getVoiceChannels().size() + " voice channels");
+
+        return mb.build().getContent();
+    }
+
     @Override
     public void onEnable() {
         this.getHilda().getCommandManager().registerChannelCommand(new AdminBaseCommand(this.getHilda(), this));
         this.getHilda().getCommandManager().registerChannelCommand(new SetupCommand(this.getHilda(), this));
+
+        this.getHilda().getBot().addEventListener(new ServerJoinListener(this));
 
         this.config = this.getHilda().getConfigurationManager().getConfiguration(this);
 
