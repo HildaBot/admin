@@ -18,11 +18,15 @@ package ch.jamiete.hilda.admin.commands;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
+import net.dv8tion.jda.core.entities.Message;
 
 public class AdminBaseCommand extends ChannelSeniorCommand {
+    private final AdminPlugin plugin;
 
     public AdminBaseCommand(final Hilda hilda, final AdminPlugin plugin) {
         super(hilda);
+
+        this.plugin = plugin;
 
         this.setName("admin");
         this.setHide(true);
@@ -34,6 +38,15 @@ public class AdminBaseCommand extends ChannelSeniorCommand {
         this.registerSubcommand(new AdminRolesCommand(hilda, plugin));
         this.registerSubcommand(new AdminServersCommand(hilda, plugin));
         this.registerSubcommand(new AdminStreamCommand(hilda, plugin));
+    }
+
+    @Override
+    public void execute(Message message, String[] arguments, String label) {
+        if (!this.plugin.canRun(message)) {
+            return;
+        }
+
+        super.execute(message, arguments, label);
     }
 
 }
