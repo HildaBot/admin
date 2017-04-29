@@ -18,23 +18,70 @@ package ch.jamiete.hilda.admin;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Start;
 import ch.jamiete.hilda.admin.commands.AdminBaseCommand;
+import ch.jamiete.hilda.admin.commands.SetupCommand;
+import ch.jamiete.hilda.configuration.Configuration;
 import ch.jamiete.hilda.music.MusicManager;
 import ch.jamiete.hilda.music.MusicPlugin;
 import ch.jamiete.hilda.plugins.HildaPlugin;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.entities.TextChannel;
 
 public class AdminPlugin extends HildaPlugin {
     private Role role;
+    private TextChannel channel;
+    private Configuration config;
 
     public AdminPlugin(Hilda hilda) {
         super(hilda);
     }
 
+    public Role getRole() {
+        return this.role;
+    }
+
+    public TextChannel getChannel() {
+        return this.channel;
+    }
+
     @Override
     public void onEnable() {
         this.getHilda().getCommandManager().registerChannelCommand(new AdminBaseCommand(this.getHilda(), this));
-        this.role = this.getHilda().getBot().getRoleById("283921566281236480");
+        this.getHilda().getCommandManager().registerChannelCommand(new SetupCommand(this.getHilda(), this));
+
+        this.config = this.getHilda().getConfigurationManager().getConfiguration(this);
+
+        if (config.get().get("role") == null) {
+            config.get().addProperty("role", "");
+            Hilda.getLogger().warning("No role specified.");
+        }
+
+        if (config.get().get("log") == null) {
+            config.get().addProperty("log", "");
+            Hilda.getLogger().warning("No log specified.");
+        }
+
+        config.save();
+
+        String cfg_role = config.get().get("role").getAsString();
+
+        if (cfg_role.isEmpty()) {
+            Hilda.getLogger().warning("No role specified.");
+        } else {
+            this.role = this.getHilda().getBot().getRoleById(cfg_role);
+        }
+
+        String cfg_log = config.get().get("log").getAsString();
+
+        if (cfg_log.isEmpty()) {
+            Hilda.getLogger().warning("No log specified.");
+        } else {
+            this.channel = this.getHilda().getBot().getTextChannelById(cfg_log);
+        }
+
+        if (this.role == null || this.channel == null) {
+            Hilda.getLogger().warning("Not currently configured correctly.");
+        }
     }
 
     public MusicManager getMusicManager() {
