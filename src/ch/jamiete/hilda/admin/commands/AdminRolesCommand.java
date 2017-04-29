@@ -24,7 +24,7 @@ import net.dv8tion.jda.core.entities.Role;
 
 public class AdminRolesCommand extends ChannelCommand {
 
-    protected AdminRolesCommand(Hilda hilda) {
+    protected AdminRolesCommand(final Hilda hilda) {
         super(hilda);
 
         this.setName("roles");
@@ -32,7 +32,7 @@ public class AdminRolesCommand extends ChannelCommand {
     }
 
     @Override
-    public void execute(Message message, String[] arguments, String label) {
+    public void execute(final Message message, final String[] arguments, final String label) {
         Guild guild = null;
 
         if (arguments.length == 1) {

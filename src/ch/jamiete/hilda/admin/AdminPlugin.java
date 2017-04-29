@@ -34,16 +34,43 @@ public class AdminPlugin extends HildaPlugin {
     private TextChannel channel;
     private Configuration config;
 
-    public AdminPlugin(Hilda hilda) {
+    public AdminPlugin(final Hilda hilda) {
         super(hilda);
     }
 
-    public Role getRole() {
-        return this.role;
+    public boolean canRun(final Message message) {
+        if (Start.DEBUG) {
+            return true;
+        }
+
+        if (this.role == null) {
+            return false;
+        }
+
+        if (this.role.getGuild().getMember(message.getAuthor()).getRoles().contains(this.role)) {
+            return true;
+        }
+
+        return false;
     }
 
     public TextChannel getChannel() {
         return this.channel;
+    }
+
+    public MusicManager getMusicManager() {
+        for (final HildaPlugin plugin : this.getHilda().getPluginManager().getPlugins()) {
+            if (plugin instanceof MusicPlugin) {
+                final MusicPlugin music = (MusicPlugin) plugin;
+                return music.getMusicManager();
+            }
+        }
+
+        return null;
+    }
+
+    public Role getRole() {
+        return this.role;
     }
 
     @Override
@@ -53,19 +80,19 @@ public class AdminPlugin extends HildaPlugin {
 
         this.config = this.getHilda().getConfigurationManager().getConfiguration(this);
 
-        if (config.get().get("role") == null) {
-            config.get().addProperty("role", "");
+        if (this.config.get().get("role") == null) {
+            this.config.get().addProperty("role", "");
             Hilda.getLogger().warning("No role specified.");
         }
 
-        if (config.get().get("log") == null) {
-            config.get().addProperty("log", "");
+        if (this.config.get().get("log") == null) {
+            this.config.get().addProperty("log", "");
             Hilda.getLogger().warning("No log specified.");
         }
 
-        config.save();
+        this.config.save();
 
-        String cfg_role = config.get().get("role").getAsString();
+        final String cfg_role = this.config.get().get("role").getAsString();
 
         if (cfg_role.isEmpty()) {
             Hilda.getLogger().warning("No role specified.");
@@ -73,7 +100,7 @@ public class AdminPlugin extends HildaPlugin {
             this.role = this.getHilda().getBot().getRoleById(cfg_role);
         }
 
-        String cfg_log = config.get().get("log").getAsString();
+        final String cfg_log = this.config.get().get("log").getAsString();
 
         if (cfg_log.isEmpty()) {
             Hilda.getLogger().warning("No log specified.");
@@ -85,7 +112,7 @@ public class AdminPlugin extends HildaPlugin {
             Hilda.getLogger().warning("Not currently configured correctly.");
         }
 
-        for (Handler h : Hilda.getLogger().getHandlers()) {
+        for (final Handler h : Hilda.getLogger().getHandlers()) {
             if (h instanceof LogReporter) {
                 h.close();
                 Hilda.getLogger().removeHandler(h);
@@ -93,33 +120,6 @@ public class AdminPlugin extends HildaPlugin {
         }
 
         Hilda.getLogger().addHandler(new LogReporter(this.channel));
-    }
-
-    public MusicManager getMusicManager() {
-        for (HildaPlugin plugin : this.getHilda().getPluginManager().getPlugins()) {
-            if (plugin instanceof MusicPlugin) {
-                MusicPlugin music = (MusicPlugin) plugin;
-                return music.getMusicManager();
-            }
-        }
-
-        return null;
-    }
-
-    public boolean canRun(Message message) {
-        if (Start.DEBUG) {
-            return true;
-        }
-
-        if (role == null) {
-            return false;
-        }
-
-        if (role.getGuild().getMember(message.getAuthor()).getRoles().contains(role)) {
-            return true;
-        }
-
-        return false;
     }
 
 }

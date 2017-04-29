@@ -26,9 +26,9 @@ import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 public class AdminConfigCommand extends ChannelCommand {
-    private AdminPlugin plugin;
+    private final AdminPlugin plugin;
 
-    protected AdminConfigCommand(Hilda hilda, AdminPlugin plugin) {
+    protected AdminConfigCommand(final Hilda hilda, final AdminPlugin plugin) {
         super(hilda);
 
         this.plugin = plugin;
@@ -39,8 +39,8 @@ public class AdminConfigCommand extends ChannelCommand {
     }
 
     @Override
-    public void execute(Message message, String[] args, String label) {
-        Configuration config = this.hilda.getConfigurationManager().getConfiguration(this.plugin);
+    public void execute(final Message message, final String[] args, final String label) {
+        final Configuration config = this.hilda.getConfigurationManager().getConfiguration(this.plugin);
 
         if (args.length == 0) {
             this.usage(message, "<role/log>", label);
@@ -49,12 +49,12 @@ public class AdminConfigCommand extends ChannelCommand {
 
         if (args[0].equalsIgnoreCase("role")) {
             if (args.length == 1) { // Provide current value
-                JsonElement output = config.get().get("role");
+                final JsonElement output = config.get().get("role");
 
                 if (output == null) {
                     this.reply(message, "There is no role currently set."); // Probably impossible to reach
                 } else {
-                    Role role = message.getGuild().getRoleById(output.getAsString());
+                    final Role role = message.getGuild().getRoleById(output.getAsString());
 
                     if (role == null) {
                         config.get().remove("role");
@@ -68,7 +68,7 @@ public class AdminConfigCommand extends ChannelCommand {
                 if (message.getMentionedRoles().isEmpty()) {
                     this.reply(message, "Please mention the role you want me to respond to.");
                 } else {
-                    Role role = message.getMentionedRoles().get(0);
+                    final Role role = message.getMentionedRoles().get(0);
 
                     config.get().addProperty("role", role.getId());
                     config.save();
@@ -79,12 +79,12 @@ public class AdminConfigCommand extends ChannelCommand {
 
         if (args[0].equalsIgnoreCase("log")) {
             if (args.length == 1) { // Provide current value
-                JsonElement output = config.get().get("log");
+                final JsonElement output = config.get().get("log");
 
                 if (output == null) {
                     this.reply(message, "There is no log channel currently set."); // Probably impossible to reach
                 } else {
-                    TextChannel channel = message.getGuild().getTextChannelById(output.getAsString());
+                    final TextChannel channel = message.getGuild().getTextChannelById(output.getAsString());
 
                     if (channel == null) {
                         config.get().remove("log");
@@ -98,7 +98,7 @@ public class AdminConfigCommand extends ChannelCommand {
                 if (message.getMentionedChannels().isEmpty()) {
                     this.reply(message, "Please mention the channel you want me to respond to.");
                 } else {
-                    TextChannel channel = message.getMentionedChannels().get(0);
+                    final TextChannel channel = message.getMentionedChannels().get(0);
 
                     config.get().addProperty("log", channel.getId());
                     config.save();

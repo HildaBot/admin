@@ -42,7 +42,7 @@ public class AdminBaseCommand extends ChannelSeniorCommand {
     }
 
     @Override
-    public void execute(Message message, String[] arguments, String label) {
+    public void execute(final Message message, final String[] arguments, final String label) {
         if (!this.plugin.canRun(message)) {
             return;
         }

@@ -24,7 +24,7 @@ import net.dv8tion.jda.core.entities.Message;
 
 public class AdminInviteCommand extends ChannelCommand {
 
-    protected AdminInviteCommand(Hilda hilda) {
+    protected AdminInviteCommand(final Hilda hilda) {
         super(hilda);
 
         this.setName("invite");
@@ -33,7 +33,7 @@ public class AdminInviteCommand extends ChannelCommand {
     }
 
     @Override
-    public void execute(Message message, String[] arguments, String label) {
+    public void execute(final Message message, final String[] arguments, final String label) {
         if (arguments.length != 1) {
             this.usage(message, "invite <id>", label);
             return;

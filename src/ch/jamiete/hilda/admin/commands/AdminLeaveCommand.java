@@ -23,7 +23,7 @@ import net.dv8tion.jda.core.entities.Message;
 
 public class AdminLeaveCommand extends ChannelCommand {
 
-    protected AdminLeaveCommand(Hilda hilda) {
+    protected AdminLeaveCommand(final Hilda hilda) {
         super(hilda);
 
         this.setName("leave");
@@ -32,7 +32,7 @@ public class AdminLeaveCommand extends ChannelCommand {
     }
 
     @Override
-    public void execute(Message message, String[] arguments, String label) {
+    public void execute(final Message message, final String[] arguments, final String label) {
         if (arguments.length != 1) {
             this.usage(message, "leave <id>", label);
             return;

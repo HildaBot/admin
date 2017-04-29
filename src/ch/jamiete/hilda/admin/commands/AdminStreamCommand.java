@@ -125,14 +125,14 @@ public class AdminStreamCommand extends ChannelCommand {
             return;
         }
 
-        VoiceChannel channel = this.hilda.getBot().getVoiceChannelById(args[0]);
+        final VoiceChannel channel = this.hilda.getBot().getVoiceChannelById(args[0]);
 
         if (channel == null) {
             this.reply(message, "I couldn't find that channel.");
             return;
         }
 
-        Guild guild = channel.getGuild();
+        final Guild guild = channel.getGuild();
 
         final MusicServer server = this.plugin.getMusicManager().hasServer(guild) ? this.plugin.getMusicManager().getServer(guild) : this.plugin.getMusicManager().createServer(guild);
 

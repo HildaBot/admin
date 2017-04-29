@@ -28,7 +28,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 
 public class AdminBroadcastCommand extends ChannelCommand {
 
-    public AdminBroadcastCommand(Hilda hilda) {
+    public AdminBroadcastCommand(final Hilda hilda) {
         super(hilda);
 
         this.setName("broadcast");
@@ -37,7 +37,7 @@ public class AdminBroadcastCommand extends ChannelCommand {
     }
 
     @Override
-    public void execute(Message message, String[] arguments, String label) {
+    public void execute(final Message message, final String[] arguments, final String label) {
         for (final Guild guild : this.hilda.getBot().getGuilds()) {
             final TextChannel channel = guild.getPublicChannel();
             final Member self = guild.getMember(this.hilda.getBot().getSelfUser());

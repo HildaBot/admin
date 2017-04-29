@@ -25,7 +25,7 @@ import net.dv8tion.jda.core.entities.Message;
 
 public class AdminServersCommand extends ChannelCommand {
 
-    public AdminServersCommand(Hilda hilda) {
+    public AdminServersCommand(final Hilda hilda) {
         super(hilda);
 
         this.setName("servers");
@@ -34,7 +34,7 @@ public class AdminServersCommand extends ChannelCommand {
     }
 
     @Override
-    public void execute(Message message, String[] arguments, String label) {
+    public void execute(final Message message, final String[] arguments, final String label) {
         final MessageBuilder mb = new MessageBuilder();
 
         mb.append("I'm on " + this.hilda.getBot().getGuilds().size() + " servers:\n");

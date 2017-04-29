@@ -25,9 +25,9 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
 
 public class SetupCommand extends ChannelCommand {
-    private AdminPlugin plugin;
+    private final AdminPlugin plugin;
 
-    public SetupCommand(Hilda hilda, AdminPlugin plugin) {
+    public SetupCommand(final Hilda hilda, final AdminPlugin plugin) {
         super(hilda);
 
         this.plugin = plugin;
@@ -40,14 +40,14 @@ public class SetupCommand extends ChannelCommand {
     }
 
     @Override
-    public void execute(Message message, String[] args, String label) {
-        if (plugin.getRole() == null || plugin.getChannel() == null) {
-            MessageBuilder mb = new MessageBuilder();
+    public void execute(final Message message, final String[] args, final String label) {
+        if (this.plugin.getRole() == null || this.plugin.getChannel() == null) {
+            final MessageBuilder mb = new MessageBuilder();
 
             mb.append("Channel: ").append(message.getChannel().getId()).append('\n');
             mb.append("Roles:");
 
-            for (Role role : message.getGuild().getRoles()) {
+            for (final Role role : message.getGuild().getRoles()) {
                 mb.append('\n');
                 mb.append(role.getName()).append(' ').append(role.getId());
             }
