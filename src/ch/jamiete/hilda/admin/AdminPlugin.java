@@ -37,9 +37,14 @@ public class AdminPlugin extends HildaPlugin {
     private Role role;
     private TextChannel channel;
     private Configuration config;
+    private LogReporter reporter;
 
     public AdminPlugin(final Hilda hilda) {
         super(hilda);
+    }
+
+    public LogReporter getReporter() {
+        return this.reporter;
     }
 
     public boolean canRun(final Message message) {
@@ -138,7 +143,8 @@ public class AdminPlugin extends HildaPlugin {
             }
         }
 
-        Hilda.getLogger().addHandler(new LogReporter(this.channel));
+        this.reporter = new LogReporter(this.channel);
+        Hilda.getLogger().addHandler(this.reporter);
     }
 
 }

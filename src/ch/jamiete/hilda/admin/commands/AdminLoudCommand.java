@@ -17,38 +17,25 @@ package ch.jamiete.hilda.admin.commands;
 
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminPlugin;
-import ch.jamiete.hilda.commands.ChannelSeniorCommand;
+import ch.jamiete.hilda.commands.ChannelCommand;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminBaseCommand extends ChannelSeniorCommand {
-    private final AdminPlugin plugin;
+public class AdminLoudCommand extends ChannelCommand {
+    private AdminPlugin plugin;
 
-    public AdminBaseCommand(final Hilda hilda, final AdminPlugin plugin) {
+    public AdminLoudCommand(final Hilda hilda, final AdminPlugin plugin) {
         super(hilda);
 
         this.plugin = plugin;
 
-        this.setName("admin");
-        this.setHide(true);
-        this.setDescription("Allows manipulation of servers.");
-
-        this.registerSubcommand(new AdminBroadcastCommand(hilda));
-        this.registerSubcommand(new AdminConfigCommand(hilda, plugin));
-        this.registerSubcommand(new AdminInviteCommand(hilda));
-        this.registerSubcommand(new AdminLeaveCommand(hilda));
-        this.registerSubcommand(new AdminLoudCommand(hilda, plugin));
-        this.registerSubcommand(new AdminRolesCommand(hilda));
-        this.registerSubcommand(new AdminServersCommand(hilda, plugin));
-        this.registerSubcommand(new AdminStreamCommand(hilda, plugin));
+        this.setName("loud");
+        this.setDescription("Broadcasts all log messages.");
     }
 
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
-        if (!this.plugin.canRun(message)) {
-            return;
-        }
-
-        super.execute(message, arguments, label);
+        plugin.getReporter().setLoud(!plugin.getReporter().getLoud());
+        this.reply(message, plugin.getReporter().getLoud() ? "I will now broadcast all log messages." : "I will stop broadcasting log messages.");
     }
 
 }
