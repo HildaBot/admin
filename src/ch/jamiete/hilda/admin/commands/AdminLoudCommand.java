@@ -17,14 +17,15 @@ package ch.jamiete.hilda.admin.commands;
 
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminPlugin;
-import ch.jamiete.hilda.commands.ChannelCommand;
+import ch.jamiete.hilda.commands.ChannelSeniorCommand;
+import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminLoudCommand extends ChannelCommand {
+public class AdminLoudCommand extends ChannelSubCommand {
     private AdminPlugin plugin;
 
-    public AdminLoudCommand(final Hilda hilda, final AdminPlugin plugin) {
-        super(hilda);
+    public AdminLoudCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
+        super(hilda, senior);
 
         this.plugin = plugin;
 

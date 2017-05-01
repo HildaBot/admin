@@ -19,17 +19,18 @@ import java.util.Arrays;
 import java.util.Optional;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
-import ch.jamiete.hilda.commands.ChannelCommand;
+import ch.jamiete.hilda.commands.ChannelSeniorCommand;
+import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-public class AdminBroadcastCommand extends ChannelCommand {
+public class AdminBroadcastCommand extends ChannelSubCommand {
 
-    public AdminBroadcastCommand(final Hilda hilda) {
-        super(hilda);
+    public AdminBroadcastCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+        super(hilda, senior);
 
         this.setName("broadcast");
         this.setAliases(Arrays.asList(new String[] { "announce" }));

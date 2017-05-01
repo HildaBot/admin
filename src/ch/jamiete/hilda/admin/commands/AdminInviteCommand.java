@@ -18,14 +18,15 @@ package ch.jamiete.hilda.admin.commands;
 import java.util.Arrays;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.runnables.OwnerInviteTask;
-import ch.jamiete.hilda.commands.ChannelCommand;
+import ch.jamiete.hilda.commands.ChannelSeniorCommand;
+import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminInviteCommand extends ChannelCommand {
+public class AdminInviteCommand extends ChannelSubCommand {
 
-    protected AdminInviteCommand(final Hilda hilda) {
-        super(hilda);
+    protected AdminInviteCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+        super(hilda, senior);
 
         this.setName("invite");
         this.setAliases(Arrays.asList(new String[] { "inv" }));

@@ -32,14 +32,14 @@ public class AdminBaseCommand extends ChannelSeniorCommand {
         this.setHide(true);
         this.setDescription("Allows manipulation of servers.");
 
-        this.registerSubcommand(new AdminBroadcastCommand(hilda));
-        this.registerSubcommand(new AdminConfigCommand(hilda, plugin));
-        this.registerSubcommand(new AdminInviteCommand(hilda));
-        this.registerSubcommand(new AdminLeaveCommand(hilda));
-        this.registerSubcommand(new AdminLoudCommand(hilda, plugin));
-        this.registerSubcommand(new AdminRolesCommand(hilda));
-        this.registerSubcommand(new AdminServersCommand(hilda, plugin));
-        this.registerSubcommand(new AdminStreamCommand(hilda, plugin));
+        this.registerSubcommand(new AdminBroadcastCommand(hilda, this));
+        this.registerSubcommand(new AdminConfigCommand(hilda, this, plugin));
+        this.registerSubcommand(new AdminInviteCommand(hilda, this));
+        this.registerSubcommand(new AdminLeaveCommand(hilda, this));
+        this.registerSubcommand(new AdminLoudCommand(hilda, this, plugin));
+        this.registerSubcommand(new AdminRolesCommand(hilda, this));
+        this.registerSubcommand(new AdminServersCommand(hilda, this, plugin));
+        this.registerSubcommand(new AdminStreamCommand(hilda, this, plugin));
     }
 
     @Override

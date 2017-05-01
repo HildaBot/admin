@@ -16,16 +16,17 @@
 package ch.jamiete.hilda.admin.commands;
 
 import ch.jamiete.hilda.Hilda;
-import ch.jamiete.hilda.commands.ChannelCommand;
+import ch.jamiete.hilda.commands.ChannelSeniorCommand;
+import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
 
-public class AdminRolesCommand extends ChannelCommand {
+public class AdminRolesCommand extends ChannelSubCommand {
 
-    protected AdminRolesCommand(final Hilda hilda) {
-        super(hilda);
+    protected AdminRolesCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+        super(hilda, senior);
 
         this.setName("roles");
         this.setDescription("Lists a server's roles.");

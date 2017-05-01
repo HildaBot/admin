@@ -22,7 +22,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminPlugin;
-import ch.jamiete.hilda.commands.ChannelCommand;
+import ch.jamiete.hilda.commands.ChannelSeniorCommand;
+import ch.jamiete.hilda.commands.ChannelSubCommand;
 import ch.jamiete.hilda.music.MusicManager;
 import ch.jamiete.hilda.music.MusicServer;
 import ch.jamiete.hilda.music.QueueItem;
@@ -32,7 +33,7 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 
-public class AdminStreamCommand extends ChannelCommand {
+public class AdminStreamCommand extends ChannelSubCommand {
 
     private class LoadResults implements AudioLoadResultHandler {
         private final MusicServer server;
@@ -109,8 +110,8 @@ public class AdminStreamCommand extends ChannelCommand {
 
     private final AdminPlugin plugin;
 
-    public AdminStreamCommand(final Hilda hilda, final AdminPlugin plugin) {
-        super(hilda);
+    public AdminStreamCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
+        super(hilda, senior);
 
         this.plugin = plugin;
 

@@ -19,17 +19,18 @@ import java.util.Arrays;
 import com.google.gson.JsonElement;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminPlugin;
-import ch.jamiete.hilda.commands.ChannelCommand;
+import ch.jamiete.hilda.commands.ChannelSeniorCommand;
+import ch.jamiete.hilda.commands.ChannelSubCommand;
 import ch.jamiete.hilda.configuration.Configuration;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-public class AdminConfigCommand extends ChannelCommand {
+public class AdminConfigCommand extends ChannelSubCommand {
     private final AdminPlugin plugin;
 
-    protected AdminConfigCommand(final Hilda hilda, final AdminPlugin plugin) {
-        super(hilda);
+    protected AdminConfigCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
+        super(hilda, senior);
 
         this.plugin = plugin;
 

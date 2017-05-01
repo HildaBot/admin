@@ -18,17 +18,18 @@ package ch.jamiete.hilda.admin.commands;
 import java.util.Arrays;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminPlugin;
-import ch.jamiete.hilda.commands.ChannelCommand;
+import ch.jamiete.hilda.commands.ChannelSeniorCommand;
+import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminServersCommand extends ChannelCommand {
+public class AdminServersCommand extends ChannelSubCommand {
     private final AdminPlugin plugin;
 
-    public AdminServersCommand(final Hilda hilda, final AdminPlugin plugin) {
-        super(hilda);
+    public AdminServersCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
+        super(hilda, senior);
 
         this.plugin = plugin;
 
