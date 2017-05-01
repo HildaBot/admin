@@ -86,7 +86,8 @@ public class AdminPlugin extends HildaPlugin {
         final MessageBuilder mb = new MessageBuilder();
 
         mb.append(guild.getName(), Formatting.BOLD);
-        mb.append(" (" + guild.getId() + ")", Formatting.ITALICS);
+        mb.append(" ");
+        mb.append("(" + guild.getId() + ")", Formatting.ITALICS);
         mb.append(" — ");
         mb.append(guild.getMembers().size() + " members, ");
         mb.append(guild.getTextChannels().size() + " text channels, ");
