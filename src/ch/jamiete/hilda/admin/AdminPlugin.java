@@ -19,6 +19,7 @@ import java.util.logging.Handler;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Start;
 import ch.jamiete.hilda.admin.commands.AdminBaseCommand;
+import ch.jamiete.hilda.admin.commands.ReportCommand;
 import ch.jamiete.hilda.admin.commands.SetupCommand;
 import ch.jamiete.hilda.admin.listeners.ServerJoinListener;
 import ch.jamiete.hilda.admin.log.LogReporter;
@@ -99,6 +100,7 @@ public class AdminPlugin extends HildaPlugin {
     @Override
     public void onEnable() {
         this.getHilda().getCommandManager().registerChannelCommand(new AdminBaseCommand(this.getHilda(), this));
+        this.getHilda().getCommandManager().registerChannelCommand(new ReportCommand(this.getHilda(), this));
         this.getHilda().getCommandManager().registerChannelCommand(new SetupCommand(this.getHilda(), this));
 
         this.getHilda().getBot().addEventListener(new ServerJoinListener(this));
