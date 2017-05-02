@@ -69,14 +69,14 @@ public class AdminPlugin extends HildaPlugin {
     }
 
     public MusicManager getMusicManager() {
-        for (final HildaPlugin plugin : this.getHilda().getPluginManager().getPlugins()) {
-            if (plugin instanceof MusicPlugin) {
-                final MusicPlugin music = (MusicPlugin) plugin;
-                return music.getMusicManager();
-            }
+        HildaPlugin plugin = this.getHilda().getPluginManager().getPlugin("music");
+
+        if (plugin == null || !(plugin instanceof MusicPlugin)) {
+            return null;
         }
 
-        return null;
+        MusicPlugin music = (MusicPlugin) plugin;
+        return music.getMusicManager();
     }
 
     public Role getRole() {
