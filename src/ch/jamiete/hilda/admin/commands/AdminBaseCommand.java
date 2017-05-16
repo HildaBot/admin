@@ -18,6 +18,7 @@ package ch.jamiete.hilda.admin.commands;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
+import ch.jamiete.hilda.commands.CommandTranscendLevel;
 import net.dv8tion.jda.core.entities.Message;
 
 public class AdminBaseCommand extends ChannelSeniorCommand {
@@ -31,6 +32,7 @@ public class AdminBaseCommand extends ChannelSeniorCommand {
         this.setName("admin");
         this.setHide(true);
         this.setDescription("Allows manipulation of servers.");
+        this.setTranscend(CommandTranscendLevel.ALL);
 
         this.registerSubcommand(new AdminBroadcastCommand(hilda, this));
         this.registerSubcommand(new AdminConfigCommand(hilda, this, plugin));
