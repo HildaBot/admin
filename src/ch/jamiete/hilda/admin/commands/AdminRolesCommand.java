@@ -58,7 +58,13 @@ public class AdminRolesCommand extends ChannelSubCommand {
 
         for (final Role role : guild.getRoles()) {
             mb.append('\n');
-            mb.append(role.getName(), Formatting.BOLD);
+
+            if (role.getName().equalsIgnoreCase("@everyone")) {
+                mb.append("default role for everyone", Formatting.BOLD);
+            } else {
+                mb.append(role.getName(), Formatting.BOLD);
+            }
+
             mb.append(' ');
             mb.append(role.getId(), Formatting.ITALICS);
         }
