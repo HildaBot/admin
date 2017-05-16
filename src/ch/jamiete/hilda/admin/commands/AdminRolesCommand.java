@@ -53,7 +53,7 @@ public class AdminRolesCommand extends ChannelSubCommand {
 
         mb.append("Roles of " + guild.getId(), Formatting.BOLD);
         mb.append('\n');
-        mb.append("Requested by " + message.getAuthor().getEffectiveAvatarUrl(), Formatting.ITALICS);
+        mb.append("Requested by " + message.getAuthor().getName(), Formatting.ITALICS);
         mb.append('\n');
 
         for (final Role role : guild.getRoles()) {
