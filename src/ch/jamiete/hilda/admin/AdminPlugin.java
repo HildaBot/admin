@@ -153,8 +153,16 @@ public class AdminPlugin extends HildaPlugin {
             }
         }
 
+        for (final Handler h : MusicManager.getLogger().getHandlers()) {
+            if (h instanceof LogReporter) {
+                h.close();
+                MusicManager.getLogger().removeHandler(h);
+            }
+        }
+
         this.reporter = new LogReporter(this.channel);
         Hilda.getLogger().addHandler(this.reporter);
+        MusicManager.getLogger().addHandler(this.reporter);
     }
 
 }
