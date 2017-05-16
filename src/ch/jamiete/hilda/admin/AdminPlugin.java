@@ -30,6 +30,7 @@ import ch.jamiete.hilda.plugins.HildaPlugin;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.MessageBuilder.Formatting;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -57,7 +58,13 @@ public class AdminPlugin extends HildaPlugin {
             return false;
         }
 
-        if (this.role.getGuild().getMember(message.getAuthor()).getRoles().contains(this.role)) {
+        Member member = this.role.getGuild().getMember(message.getAuthor());
+
+        if (member == null) {
+            return false;
+        }
+
+        if (member.getRoles().contains(this.role)) {
             return true;
         }
 
