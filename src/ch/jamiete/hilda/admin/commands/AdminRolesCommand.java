@@ -18,7 +18,9 @@ package ch.jamiete.hilda.admin.commands;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.core.MessageBuilder.Formatting;
+import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
@@ -47,15 +49,21 @@ public class AdminRolesCommand extends ChannelSubCommand {
             return;
         }
 
-        final EmbedBuilder eb = new EmbedBuilder();
+        final MessageBuilder mb = new MessageBuilder();
 
-        eb.setTitle("Roles of " + guild.getId(), null);
+        mb.append("Roles of " + guild.getId(), Formatting.BOLD);
+        mb.append('\n');
+        mb.append("Requested by " + message.getAuthor().getEffectiveAvatarUrl(), Formatting.ITALICS);
+        mb.append('\n');
 
         for (final Role role : guild.getRoles()) {
-            eb.addField(role.getName(), role.getId(), true);
+            mb.append('\n');
+            mb.append(role.getName(), Formatting.BOLD);
+            mb.append(' ');
+            mb.append(role.getId(), Formatting.ITALICS);
         }
 
-        this.reply(message, eb.build());
+        mb.buildAll(SplitPolicy.NEWLINE).forEach(m -> message.getChannel().sendMessage(m).queue());
     }
 
 }
