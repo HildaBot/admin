@@ -17,6 +17,7 @@ package ch.jamiete.hilda.admin.commands;
 
 import java.util.List;
 import ch.jamiete.hilda.Hilda;
+import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
@@ -24,6 +25,7 @@ import ch.jamiete.hilda.music.MusicManager;
 import ch.jamiete.hilda.music.MusicServer;
 import ch.jamiete.hilda.music.QueueItem;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 
 public class AdminMusicCommand extends ChannelSubCommand {
@@ -73,7 +75,7 @@ public class AdminMusicCommand extends ChannelSubCommand {
 
             long rem = 0;
 
-            if (server.getPlayer().getPlayingTrack() == null) {
+            if (server.getPlayer().getPlayingTrack() != null) {
                 rem += server.getPlayer().getPlayingTrack().getDuration() - server.getPlayer().getPlayingTrack().getPosition();
             }
 
@@ -81,7 +83,15 @@ public class AdminMusicCommand extends ChannelSubCommand {
                 rem += item.getTrack().getDuration();
             }
 
-            eb.addField("Estimated time until completion", MusicManager.getFriendlyTime(rem), false);
+            eb.addField("Estimated time until completion", Util.getFriendlyTime(rem), false);
+
+            StringBuilder sb = new StringBuilder();
+            for (Member member : server.getChannel().getMembers()) {
+                sb.append(Util.getName(member)).append(", ");
+            }
+            sb.setLength(sb.length() - 2);
+
+            eb.addField("Audience", sb.toString(), false);
 
             this.reply(message, eb.build());
         }
