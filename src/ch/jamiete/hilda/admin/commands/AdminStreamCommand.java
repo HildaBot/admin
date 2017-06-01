@@ -21,6 +21,7 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import ch.jamiete.hilda.Hilda;
+import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
@@ -98,7 +99,7 @@ public class AdminStreamCommand extends ChannelSubCommand {
 
                 time += this.server.getPlayer().getPlayingTrack().getDuration() - this.server.getPlayer().getPlayingTrack().getPosition();
 
-                sb.append("; playing in ").append(MusicManager.getFriendlyTime(time)).append("!");
+                sb.append("; playing in ").append(Util.getFriendlyTime(time)).append("!");
             }
 
             AdminStreamCommand.this.reply(this.message, sb.toString());
