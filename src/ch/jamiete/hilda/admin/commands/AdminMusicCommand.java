@@ -16,6 +16,7 @@
 package ch.jamiete.hilda.admin.commands;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminPlugin;
@@ -44,10 +45,18 @@ public class AdminMusicCommand extends ChannelSubCommand {
     @Override
     public void execute(final Message message, final String[] args, final String label) {
         List<MusicServer> servers = this.plugin.getMusicManager().getServers();
+        long longest = 0;
 
         this.reply(message, "I'm currently playing music on " + servers.size() + " " + (servers.size() == 1 ? "server" : "servers"));
 
         for (MusicServer server : servers) {
+            long duration = server.getDuration();
+
+            if (duration > longest) {
+                longest = duration;
+            }
+
+            // Message construction
             EmbedBuilder eb = new EmbedBuilder();
 
             eb.setTitle(server.getGuild().getName(), null);
@@ -85,15 +94,20 @@ public class AdminMusicCommand extends ChannelSubCommand {
 
             eb.addField("Estimated time until completion", Util.getFriendlyTime(rem), false);
 
+            List<Member> audience = server.getChannel().getMembers().stream().filter(m -> !m.getUser().isBot()).collect(Collectors.toList());
             StringBuilder sb = new StringBuilder();
-            for (Member member : server.getChannel().getMembers()) {
+            for (Member member : audience) {
                 sb.append(Util.getName(member)).append(", ");
             }
             sb.setLength(sb.length() - 2);
 
-            eb.addField("Audience", sb.toString(), false);
+            eb.addField("Audience (" + audience.size() + ")", sb.toString(), false);
 
             this.reply(message, eb.build());
+        }
+
+        if (servers.size() > 1) {
+            this.reply(message, "**The longest queue will end in approximately " + Util.getFriendlyTime(longest) + "!**");
         }
     }
 
