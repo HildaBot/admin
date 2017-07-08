@@ -22,13 +22,11 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import ch.jamiete.hilda.LogFormat;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.MessageBuilder.Formatting;
-import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 public class LogReporter extends Handler {
     public static final List<Level> LEVELS = Collections.unmodifiableList(Arrays.asList(new Level[] { Level.WARNING, Level.SEVERE }));
+    private final String vowels = "aeiou";
     private final LogFormat formatter = new LogFormat();
     private final TextChannel channel;
     private boolean loud = false;
@@ -61,12 +59,41 @@ public class LogReporter extends Handler {
             return;
         }
 
-        final MessageBuilder mb = new MessageBuilder();
+        final StringBuilder sb = new StringBuilder(2000);
 
-        mb.append("Caught a " + record.getLevel().getName() + " message:\n");
-        mb.append(this.formatter.format(record), Formatting.BLOCK);
+        sb.append("** Caught a");
 
-        mb.buildAll(SplitPolicy.NEWLINE).forEach(m -> this.channel.sendMessage(m).queue());
+        if (this.vowels.indexOf(record.getLevel().getName().toLowerCase().charAt(0)) != -1) {
+            sb.append("n");
+        }
+
+        sb.append(" " + record.getLevel().getName() + " record:**\n");
+        sb.append("`");
+
+        for (String line : this.formatter.format(record).split("\n")) {
+            line = line + "\n";
+
+            if (sb.length() + line.length() + 1 > 2000) {
+                sb.append("`");
+                this.channel.sendMessage(sb.toString()).queue();
+
+                sb.setLength(0);
+                sb.append("`");
+
+                if (line.startsWith(" ")) {
+                    sb.append(line.replaceFirst(" ", "."));
+                } else {
+                    sb.append(line);
+                }
+            } else {
+                sb.append(line);
+            }
+        }
+
+        if (sb.length() > 0) {
+            sb.append("`");
+            this.channel.sendMessage(sb.toString()).queue();
+        }
     }
 
 }
