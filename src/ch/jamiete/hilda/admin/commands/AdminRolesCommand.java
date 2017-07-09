@@ -60,7 +60,7 @@ public class AdminRolesCommand extends ChannelSubCommand {
             mb.append('\n');
 
             if (role.getName().equalsIgnoreCase("@everyone")) {
-                mb.append("default role for everyone", Formatting.BOLD);
+                mb.append("\\@\u200Beveryone", Formatting.BOLD);
             } else {
                 mb.append(role.getName(), Formatting.BOLD);
             }
