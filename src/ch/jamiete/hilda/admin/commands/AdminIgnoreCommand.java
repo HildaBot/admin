@@ -61,7 +61,7 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
                     User u = this.hilda.getBot().getUserById(s);
 
                     if (u == null) {
-                        pieces.add(s);
+                        pieces.add("<@!" + s + ">");
                     } else {
                         pieces.add(u.getAsMention() + " (" + Util.getName(u) + ")");
                     }
@@ -127,7 +127,7 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
             User u = this.hilda.getBot().getUserById(id);
 
             if (u == null) {
-                pieces.add(id);
+                pieces.add("<@!" + id + ">");
             } else {
                 pieces.add(u.getAsMention() + " (" + Util.getName(u) + ")");
             }
