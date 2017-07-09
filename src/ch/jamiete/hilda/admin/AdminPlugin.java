@@ -15,7 +15,10 @@
  *******************************************************************************/
 package ch.jamiete.hilda.admin;
 
+import java.util.Iterator;
 import java.util.logging.Handler;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Start;
 import ch.jamiete.hilda.admin.commands.AdminBaseCommand;
@@ -163,6 +166,19 @@ public class AdminPlugin extends HildaPlugin {
         this.reporter = new LogReporter(this.channel);
         Hilda.getLogger().addHandler(this.reporter);
         MusicManager.getLogger().addHandler(this.reporter);
+
+        Configuration cfg = this.getHilda().getConfigurationManager().getConfiguration(this, "ignoredusers");
+        JsonArray array = cfg.get().getAsJsonArray("users");
+
+        if (array != null) {
+            Iterator<JsonElement> iterator = array.iterator();
+
+            while (iterator.hasNext()) {
+                this.getHilda().getCommandManager().addIgnoredUser(iterator.next().getAsString());
+            }
+
+            Hilda.getLogger().info("Ignored " + array.size() + " naughty users.");
+        }
     }
 
 }
