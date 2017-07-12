@@ -16,6 +16,7 @@
 package ch.jamiete.hilda.admin.commands;
 
 import ch.jamiete.hilda.Hilda;
+import ch.jamiete.hilda.admin.AdminUtil;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.MessageBuilder;
@@ -51,7 +52,7 @@ public class AdminRolesCommand extends ChannelSubCommand {
 
         final MessageBuilder mb = new MessageBuilder();
 
-        mb.append("Roles of " + guild.getId(), Formatting.BOLD);
+        mb.append("Roles of " + AdminUtil.getName(guild), Formatting.BOLD);
         mb.append('\n');
         mb.append("Requested by " + message.getAuthor().getName(), Formatting.ITALICS);
         mb.append('\n');

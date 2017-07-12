@@ -16,6 +16,8 @@
 package ch.jamiete.hilda.admin.commands;
 
 import ch.jamiete.hilda.Hilda;
+import ch.jamiete.hilda.Util;
+import ch.jamiete.hilda.admin.AdminUtil;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.MessageBuilder;
@@ -52,6 +54,9 @@ public class AdminInfoCommand extends ChannelSubCommand {
         }
 
         final MessageBuilder mb = new MessageBuilder();
+
+        mb.append("Server information", Formatting.UNDERLINE).append("\n");
+        mb.append("For ").append(AdminUtil.getName(guild)).append("\n\n");
 
         mb.append("Roles:", Formatting.BOLD);
         mb.append(' ');
@@ -100,7 +105,7 @@ public class AdminInfoCommand extends ChannelSubCommand {
         mb.append('\n');
 
         mb.append("Owner:", Formatting.BOLD);
-        mb.append(" ").append(guild.getOwner().getUser().getName()).append("#").append(guild.getOwner().getUser().getDiscriminator());
+        mb.append(" ").append(Util.getName(guild.getOwner())).append(" ").append(guild.getOwner().getUser().getId());
 
         mb.buildAll(SplitPolicy.NEWLINE).forEach(m -> message.getChannel().sendMessage(m).queue());
     }
