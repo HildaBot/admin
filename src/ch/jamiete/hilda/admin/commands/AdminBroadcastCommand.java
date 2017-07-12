@@ -15,16 +15,20 @@
  *******************************************************************************/
 package ch.jamiete.hilda.admin.commands;
 
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
+import java.util.List;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
+import ch.jamiete.hilda.admin.AdminUtil;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
-import net.dv8tion.jda.core.Permission;
+import ch.jamiete.hilda.commands.CommandManager;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 public class AdminBroadcastCommand extends ChannelSubCommand {
@@ -39,25 +43,37 @@ public class AdminBroadcastCommand extends ChannelSubCommand {
 
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
+        final List<String> failed = new ArrayList<String>();
+
+        final String broadcast = "**THE ADMINISTRATORS OF HILDA HAVE ANNOUNCED THE FOLLOWING**\n" + Util.combineSplit(0, arguments, " ");
+        final EmbedBuilder eb = new EmbedBuilder();
+
+        eb.setTitle("Notice from administrators");
+        eb.setThumbnail(this.hilda.getBot().getSelfUser().getEffectiveAvatarUrl());
+        eb.setDescription(broadcast);
+        eb.setColor(Color.decode("#FF0303"));
+        eb.setFooter("Do not respond to this message. Use " + CommandManager.PREFIX + "report <message> to contact the administrators.", null);
+
+        final MessageEmbed embed = eb.build();
+
         for (final Guild guild : this.hilda.getBot().getGuilds()) {
-            final TextChannel channel = guild.getPublicChannel();
-            final Member self = guild.getMember(this.hilda.getBot().getSelfUser());
+            final TextChannel channel = AdminUtil.getChannel(guild);
 
-            if (self.hasPermission(channel, Permission.MESSAGE_WRITE)) {
-                channel.sendMessage("**NOTICE FROM ADMINISTRATOR:** " + Util.combineSplit(1, arguments, " ")).queue();
-                continue;
+            if (channel == null) {
+                failed.add(AdminUtil.getName(guild));
+            } else {
+                channel.sendMessage(embed).queue();
             }
-
-            final Optional<TextChannel> optional = guild.getTextChannels().stream().filter(chan -> self.hasPermission(chan, Permission.MESSAGE_WRITE)).findFirst();
-            if (optional.isPresent()) {
-                optional.get().sendMessage("**NOTICE FROM ADMINISTRATOR:** " + Util.combineSplit(0, arguments, " ")).queue();
-                continue;
-            }
-
-            Hilda.getLogger().warning("Failed to find channel to send message to on " + guild.getName() + " " + guild.getId());
         }
 
-        this.reply(message, "Sent notice!");
+        String response = "Sent notice!";
+
+        if (!failed.isEmpty()) {
+            response += " Couldn't find a channel to send the notice to in " + Util.getAsList(failed);
+        }
+
+        this.reply(message, response);
+        this.reply(message, embed);
     }
 
 }
