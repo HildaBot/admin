@@ -119,7 +119,7 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
 
         MessageBuilder mb = new MessageBuilder();
 
-        mb.append("OK! I'm ").append(direction == IgnoreDirection.IGNORE ? "now" : "no longer").append(" ignoring ");
+        mb.append("OK, I'm ").append(direction == IgnoreDirection.IGNORE ? "now" : "no longer").append(" ignoring ");
 
         List<String> pieces = new ArrayList<String>();
 
