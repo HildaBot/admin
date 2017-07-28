@@ -43,7 +43,14 @@ public class AdminSayCommand extends ChannelSubCommand {
             return;
         }
 
-        Guild guild = this.hilda.getBot().getGuildById(arguments[0]);
+        Guild guild = null;
+
+        try {
+            guild = this.hilda.getBot().getGuildById(arguments[0]);
+        } catch (Exception e) {
+            this.reply(message, "I couldn't find that server.");
+            return;
+        }
 
         if (guild == null) {
             this.reply(message, "I'm not on that server.");
@@ -57,7 +64,7 @@ public class AdminSayCommand extends ChannelSubCommand {
             return;
         }
 
-        final String broadcast = "**THE ADMINISTRATORS OF HILDA HAVE ANNOUNCED THE FOLLOWING**\n" + Util.combineSplit(0, arguments, " ");
+        final String broadcast = "**THE ADMINISTRATORS OF HILDA HAVE ANNOUNCED THE FOLLOWING**\n" + Util.combineSplit(1, arguments, " ");
         final EmbedBuilder eb = new EmbedBuilder();
 
         eb.setTitle("Notice from administrators");
