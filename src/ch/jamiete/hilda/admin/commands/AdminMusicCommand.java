@@ -73,12 +73,21 @@ public class AdminMusicCommand extends ChannelSubCommand {
                 eb.addField("Queue", "Nothing!", false);
             } else {
                 StringBuilder sb = new StringBuilder();
+                int max = 25;
+                boolean larger = queue.size() > max;
+                int check = larger ? max : queue.size();
 
-                for (QueueItem item : queue) {
-                    sb.append(MusicManager.getFriendly(item.getTrack())).append(", ");
+                for (int i = 0; i < check; i++) {
+                    sb.append(MusicManager.getFriendly(queue.get(i).getTrack())).append(", ");
                 }
 
                 sb.setLength(sb.length() - 2);
+
+                if (larger) {
+                    int remaining = queue.size() - max;
+                    sb.append(" and ").append(remaining).append(remaining == 1 ? "song" : "songs");
+                }
+
                 eb.addField("Queue", sb.toString(), false);
             }
 
