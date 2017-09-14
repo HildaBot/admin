@@ -12,8 +12,8 @@ public class AdminUtil {
      * @return A text channel that the bot can speak in or null.
      */
     public static TextChannel getChannel(final Guild guild) {
-        if (guild.getSelfMember().hasPermission(guild.getPublicChannel(), Permission.MESSAGE_WRITE)) {
-            return guild.getPublicChannel();
+        if (guild.getSelfMember().hasPermission(guild.getDefaultChannel(), Permission.MESSAGE_WRITE)) {
+            return guild.getDefaultChannel();
         }
 
         for (TextChannel channel : guild.getTextChannels()) {

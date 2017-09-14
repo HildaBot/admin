@@ -38,8 +38,8 @@ public class OwnerInviteTask implements Runnable {
     public void run() {
         final Member self = this.guild.getMember(this.hilda.getBot().getSelfUser());
 
-        if (self.hasPermission(this.guild.getPublicChannel(), Permission.CREATE_INSTANT_INVITE)) {
-            final Invite invite = this.guild.getPublicChannel().createInvite().complete();
+        if (self.hasPermission(this.guild.getDefaultChannel(), Permission.CREATE_INSTANT_INVITE)) {
+            final Invite invite = this.guild.getDefaultChannel().createInvite().complete();
             this.message.getTextChannel().sendMessage("https://discord.gg/" + invite.getCode()).queue();
             return;
         }
