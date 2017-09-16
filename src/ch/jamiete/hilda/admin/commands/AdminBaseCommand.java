@@ -47,6 +47,7 @@ public class AdminBaseCommand extends ChannelSeniorCommand {
         this.registerSubcommand(new AdminSayCommand(hilda, this));
         this.registerSubcommand(new AdminServersCommand(hilda, this, plugin));
         this.registerSubcommand(new AdminStreamCommand(hilda, this, plugin));
+        this.registerSubcommand(new AdminVoiceCommand(hilda, this));
     }
 
     @Override
