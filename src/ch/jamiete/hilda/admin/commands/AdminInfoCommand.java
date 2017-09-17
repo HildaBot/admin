@@ -61,7 +61,7 @@ public class AdminInfoCommand extends ChannelSubCommand {
         mb.append("Roles:", Formatting.BOLD);
         mb.append(' ');
 
-        for (Role role : guild.getSelfMember().getRoles()) {
+        for (final Role role : guild.getSelfMember().getRoles()) {
             mb.append(role.getName() + " (" + role.getId() + ")");
             mb.append(", ");
         }
@@ -72,7 +72,7 @@ public class AdminInfoCommand extends ChannelSubCommand {
         mb.append("Permissions:", Formatting.BOLD);
         mb.append(' ');
 
-        for (Permission permission : Permission.getPermissions(Permission.ALL_GUILD_PERMISSIONS)) {
+        for (final Permission permission : Permission.getPermissions(Permission.ALL_GUILD_PERMISSIONS)) {
             mb.append(permission.getName().toLowerCase().replace("_", ""), guild.getSelfMember().hasPermission(permission) ? Formatting.UNDERLINE : Formatting.STRIKETHROUGH);
             mb.append(", ");
         }
@@ -83,13 +83,13 @@ public class AdminInfoCommand extends ChannelSubCommand {
 
         mb.append("Channels:", Formatting.BOLD);
 
-        for (TextChannel channel : guild.getTextChannels()) {
+        for (final TextChannel channel : guild.getTextChannels()) {
             mb.append('\n');
             mb.append("    ");
             mb.append(channel.getName(), Formatting.BOLD);
             mb.append(": ");
 
-            for (Permission permission : Permission.getPermissions(Permission.ALL_TEXT_PERMISSIONS)) {
+            for (final Permission permission : Permission.getPermissions(Permission.ALL_TEXT_PERMISSIONS)) {
                 mb.append(permission.getName().toLowerCase().replace("_", ""), guild.getSelfMember().hasPermission(channel, permission) ? Formatting.UNDERLINE : Formatting.STRIKETHROUGH);
                 mb.append(", ");
             }

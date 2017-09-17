@@ -45,7 +45,7 @@ public class ReportCommand extends ChannelCommand {
             return;
         }
 
-        EmbedBuilder eb = new EmbedBuilder();
+        final EmbedBuilder eb = new EmbedBuilder();
 
         eb.setTitle("New report received", null);
         eb.setColor(Color.decode("#a51d1d"));

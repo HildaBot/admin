@@ -22,7 +22,7 @@ import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.entities.Message;
 
 public class AdminLoudCommand extends ChannelSubCommand {
-    private AdminPlugin plugin;
+    private final AdminPlugin plugin;
 
     public AdminLoudCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
         super(hilda, senior);
@@ -35,8 +35,8 @@ public class AdminLoudCommand extends ChannelSubCommand {
 
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
-        plugin.getReporter().setLoud(!plugin.getReporter().getLoud());
-        this.reply(message, plugin.getReporter().getLoud() ? "I will now broadcast all log messages." : "I will stop broadcasting log messages.");
+        this.plugin.getReporter().setLoud(!this.plugin.getReporter().getLoud());
+        this.reply(message, this.plugin.getReporter().getLoud() ? "I will now broadcast all log messages." : "I will stop broadcasting log messages.");
     }
 
 }

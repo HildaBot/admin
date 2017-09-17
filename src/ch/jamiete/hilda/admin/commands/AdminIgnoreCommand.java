@@ -32,7 +32,11 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.User;
 
 public class AdminIgnoreCommand extends ChannelSubCommand {
-    private AdminPlugin plugin;
+    private enum IgnoreDirection {
+        IGNORE, UNIGNORE;
+    }
+
+    private final AdminPlugin plugin;
 
     protected AdminIgnoreCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
         super(hilda, senior);
@@ -47,18 +51,18 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
         if (arguments.length == 1 && arguments[0].equalsIgnoreCase("list")) {
-            List<String> strings = this.hilda.getCommandManager().getIgnoredUsers();
+            final List<String> strings = this.hilda.getCommandManager().getIgnoredUsers();
 
             if (strings.isEmpty()) {
                 this.reply(message, "I'm not ignoring any channels!");
             } else {
-                MessageBuilder mb = new MessageBuilder();
+                final MessageBuilder mb = new MessageBuilder();
                 mb.append("I'm currently ignoring ");
 
-                List<String> pieces = new ArrayList<String>();
+                final List<String> pieces = new ArrayList<String>();
 
-                for (String s : strings) {
-                    User u = this.hilda.getBot().getUserById(s);
+                for (final String s : strings) {
+                    final User u = this.hilda.getBot().getUserById(s);
 
                     if (u == null) {
                         pieces.add("<@!" + s + ">");
@@ -79,27 +83,27 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
             this.usage(message, "<@user.../id...>");
         }
 
-        IgnoreDirection direction = IgnoreDirection.valueOf(label.toUpperCase());
-        List<String> ids = new ArrayList<String>();
+        final IgnoreDirection direction = IgnoreDirection.valueOf(label.toUpperCase());
+        final List<String> ids = new ArrayList<String>();
 
         if (!message.getMentionedUsers().isEmpty()) {
             message.getMentionedUsers().forEach(u -> ids.add(u.getId()));
         }
 
-        for (String arg : arguments) {
+        for (final String arg : arguments) {
             if (!arg.startsWith("<@")) {
                 ids.add(arg);
             }
         }
 
-        Configuration cfg = this.hilda.getConfigurationManager().getConfiguration(this.plugin, "ignoredusers");
+        final Configuration cfg = this.hilda.getConfigurationManager().getConfiguration(this.plugin, "ignoredusers");
         JsonArray array = cfg.get().getAsJsonArray("users");
 
         if (array == null) {
             array = new JsonArray();
         }
 
-        for (String id : ids) {
+        for (final String id : ids) {
             if (direction == IgnoreDirection.IGNORE) {
                 this.hilda.getCommandManager().addIgnoredUser(id);
 
@@ -117,14 +121,14 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
         cfg.get().add("users", array);
         cfg.save();
 
-        MessageBuilder mb = new MessageBuilder();
+        final MessageBuilder mb = new MessageBuilder();
 
         mb.append("OK, I'm ").append(direction == IgnoreDirection.IGNORE ? "now" : "no longer").append(" ignoring ");
 
-        List<String> pieces = new ArrayList<String>();
+        final List<String> pieces = new ArrayList<String>();
 
-        for (String id : ids) {
-            User u = this.hilda.getBot().getUserById(id);
+        for (final String id : ids) {
+            final User u = this.hilda.getBot().getUserById(id);
 
             if (u == null) {
                 pieces.add("<@!" + id + ">");
@@ -137,10 +141,6 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
         mb.append(".");
 
         mb.buildAll(SplitPolicy.SPACE).forEach(m -> message.getChannel().sendMessage(m).queue());
-    }
-
-    private enum IgnoreDirection {
-        IGNORE, UNIGNORE;
     }
 
 }

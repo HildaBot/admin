@@ -37,7 +37,7 @@ public class AdminVitalsCommand extends ChannelSubCommand {
 
         // AUDIO
 
-        EmbedBuilder audio = new EmbedBuilder();
+        final EmbedBuilder audio = new EmbedBuilder();
         audio.setTitle("Audio vitals");
         audio.addField("Connected channel", String.valueOf(guild.getAudioManager().getConnectedChannel()), true);
         audio.addField("Connection status", String.valueOf(guild.getAudioManager().getConnectionStatus()), true);

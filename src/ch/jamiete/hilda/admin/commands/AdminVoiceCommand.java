@@ -40,7 +40,7 @@ public class AdminVoiceCommand extends ChannelSubCommand {
         // Queue message and, once sent, in 2 seconds inform of close response.
         message.getChannel().sendMessage("Closed audio connection.").queue((m) -> {
             this.hilda.getExecutor().schedule(() -> {
-                StringBuilder sb = new StringBuilder();
+                final StringBuilder sb = new StringBuilder();
 
                 sb.append(m.getRawContent());
                 sb.append(" Voice connection is now reported as ");

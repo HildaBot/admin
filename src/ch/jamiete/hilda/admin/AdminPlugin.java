@@ -48,10 +48,6 @@ public class AdminPlugin extends HildaPlugin {
         super(hilda);
     }
 
-    public LogReporter getReporter() {
-        return this.reporter;
-    }
-
     public boolean canRun(final Message message) {
         if (Start.DEBUG) {
             return true;
@@ -61,7 +57,7 @@ public class AdminPlugin extends HildaPlugin {
             return false;
         }
 
-        Member member = this.role.getGuild().getMember(message.getAuthor());
+        final Member member = this.role.getGuild().getMember(message.getAuthor());
 
         if (member == null) {
             return false;
@@ -79,14 +75,18 @@ public class AdminPlugin extends HildaPlugin {
     }
 
     public MusicManager getMusicManager() {
-        HildaPlugin plugin = this.getHilda().getPluginManager().getPlugin("music");
+        final HildaPlugin plugin = this.getHilda().getPluginManager().getPlugin("music");
 
         if (plugin == null || !(plugin instanceof MusicPlugin)) {
             return null;
         }
 
-        MusicPlugin music = (MusicPlugin) plugin;
+        final MusicPlugin music = (MusicPlugin) plugin;
         return music.getMusicManager();
+    }
+
+    public LogReporter getReporter() {
+        return this.reporter;
     }
 
     public Role getRole() {
@@ -167,11 +167,11 @@ public class AdminPlugin extends HildaPlugin {
         Hilda.getLogger().addHandler(this.reporter);
         MusicManager.getLogger().addHandler(this.reporter);
 
-        Configuration cfg = this.getHilda().getConfigurationManager().getConfiguration(this, "ignoredusers");
-        JsonArray array = cfg.get().getAsJsonArray("users");
+        final Configuration cfg = this.getHilda().getConfigurationManager().getConfiguration(this, "ignoredusers");
+        final JsonArray array = cfg.get().getAsJsonArray("users");
 
         if (array != null) {
-            Iterator<JsonElement> iterator = array.iterator();
+            final Iterator<JsonElement> iterator = array.iterator();
 
             while (iterator.hasNext()) {
                 this.getHilda().getCommandManager().addIgnoredUser(iterator.next().getAsString());

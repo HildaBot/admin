@@ -47,7 +47,7 @@ public class AdminSayCommand extends ChannelSubCommand {
 
         try {
             guild = this.hilda.getBot().getGuildById(arguments[0]);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             this.reply(message, "I couldn't find that server.");
             return;
         }
@@ -57,7 +57,7 @@ public class AdminSayCommand extends ChannelSubCommand {
             return;
         }
 
-        TextChannel channel = AdminUtil.getChannel(guild);
+        final TextChannel channel = AdminUtil.getChannel(guild);
 
         if (channel == null) {
             this.reply(message, "There's no channel I can send that message to.");

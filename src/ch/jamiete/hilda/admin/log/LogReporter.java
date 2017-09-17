@@ -49,10 +49,6 @@ public class LogReporter extends Handler {
         return this.loud;
     }
 
-    public void setLoud(final boolean loud) {
-        this.loud = loud;
-    }
-
     @Override
     public void publish(final LogRecord record) {
         if (!LogReporter.LEVELS.contains(record.getLevel()) && !this.loud || this.loud && !(LogReporter.LEVELS.contains(record.getLevel()) || record.getLevel() == Level.INFO) || this.channel == null) {
@@ -94,6 +90,10 @@ public class LogReporter extends Handler {
             sb.append("`");
             this.channel.sendMessage(sb.toString()).queue();
         }
+    }
+
+    public void setLoud(final boolean loud) {
+        this.loud = loud;
     }
 
 }

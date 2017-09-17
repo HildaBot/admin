@@ -44,20 +44,20 @@ public class AdminMusicCommand extends ChannelSubCommand {
 
     @Override
     public void execute(final Message message, final String[] args, final String label) {
-        List<MusicServer> servers = this.plugin.getMusicManager().getServers();
+        final List<MusicServer> servers = this.plugin.getMusicManager().getServers();
         long longest = 0;
 
         this.reply(message, "I'm currently playing music on " + servers.size() + " " + (servers.size() == 1 ? "server" : "servers"));
 
-        for (MusicServer server : servers) {
-            long duration = server.getDuration();
+        for (final MusicServer server : servers) {
+            final long duration = server.getDuration();
 
             if (duration > longest) {
                 longest = duration;
             }
 
             // Message construction
-            EmbedBuilder eb = new EmbedBuilder();
+            final EmbedBuilder eb = new EmbedBuilder();
 
             eb.setTitle(server.getGuild().getName(), null);
 
@@ -67,15 +67,15 @@ public class AdminMusicCommand extends ChannelSubCommand {
                 eb.addField("Now playing", MusicManager.getFriendly(server.getPlayer().getPlayingTrack()), false);
             }
 
-            List<QueueItem> queue = server.getQueue();
+            final List<QueueItem> queue = server.getQueue();
 
             if (queue.size() == 0) {
                 eb.addField("Queue", "Nothing!", false);
             } else {
-                StringBuilder sb = new StringBuilder();
-                int max = 25;
-                boolean larger = queue.size() > max;
-                int check = larger ? max : queue.size();
+                final StringBuilder sb = new StringBuilder();
+                final int max = 25;
+                final boolean larger = queue.size() > max;
+                final int check = larger ? max : queue.size();
 
                 for (int i = 0; i < check; i++) {
                     sb.append(MusicManager.getFriendly(queue.get(i).getTrack())).append(", ");
@@ -84,7 +84,7 @@ public class AdminMusicCommand extends ChannelSubCommand {
                 sb.setLength(sb.length() - 2);
 
                 if (larger) {
-                    int remaining = queue.size() - max;
+                    final int remaining = queue.size() - max;
                     sb.append(" and ").append(remaining).append(remaining == 1 ? "song" : "songs");
                 }
 
@@ -97,15 +97,15 @@ public class AdminMusicCommand extends ChannelSubCommand {
                 rem += server.getPlayer().getPlayingTrack().getDuration() - server.getPlayer().getPlayingTrack().getPosition();
             }
 
-            for (QueueItem item : queue) {
+            for (final QueueItem item : queue) {
                 rem += item.getTrack().getDuration();
             }
 
             eb.addField("Estimated time until completion", Util.getFriendlyTime(rem), false);
 
-            List<Member> audience = server.getChannel().getMembers().stream().filter(m -> !m.getUser().isBot()).collect(Collectors.toList());
-            StringBuilder sb = new StringBuilder();
-            for (Member member : audience) {
+            final List<Member> audience = server.getChannel().getMembers().stream().filter(m -> !m.getUser().isBot()).collect(Collectors.toList());
+            final StringBuilder sb = new StringBuilder();
+            for (final Member member : audience) {
                 sb.append(Util.getName(member)).append(", ");
             }
             sb.setLength(sb.length() - 2);
