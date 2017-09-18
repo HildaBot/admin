@@ -22,23 +22,21 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminVitalsCommand extends ChannelSubCommand {
+public class AdminVoiceInfoCommand extends ChannelSubCommand {
 
-    protected AdminVitalsCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+    protected AdminVoiceInfoCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
         super(hilda, senior);
 
-        this.setName("vitals");
-        this.setDescription("Lists the vitals of the server.");
+        this.setName("voiceinfo");
+        this.setDescription("Lists information about the voice connection in the current guild.");
     }
 
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
         final Guild guild = message.getGuild();
 
-        // AUDIO
-
         final EmbedBuilder audio = new EmbedBuilder();
-        audio.setTitle("Audio vitals");
+        audio.setTitle("Voice connection information");
         audio.addField("Connected channel", String.valueOf(guild.getAudioManager().getConnectedChannel()), true);
         audio.addField("Connection status", String.valueOf(guild.getAudioManager().getConnectionStatus()), true);
         audio.addField("Queued channel", String.valueOf(guild.getAudioManager().getQueuedAudioConnection()), true);

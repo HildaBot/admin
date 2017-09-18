@@ -22,12 +22,12 @@ import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.audio.hooks.ConnectionStatus;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminVoiceCommand extends ChannelSubCommand {
+public class AdminVoiceLeaveCommand extends ChannelSubCommand {
 
-    protected AdminVoiceCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+    protected AdminVoiceLeaveCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
         super(hilda, senior);
 
-        this.setName("voice");
+        this.setName("voiceleave");
         this.setDescription("Leaves the voice channel.");
     }
 
@@ -38,18 +38,18 @@ public class AdminVoiceCommand extends ChannelSubCommand {
         message.getGuild().getAudioManager().closeAudioConnection();
 
         // Queue message and, once sent, in 2 seconds inform of close response.
-        message.getChannel().sendMessage("Closed audio connection.").queue((m) -> {
+        message.getChannel().sendMessage("OK, I closed the audio connection.").queue((m) -> {
             this.hilda.getExecutor().schedule(() -> {
                 final StringBuilder sb = new StringBuilder();
 
                 sb.append(m.getRawContent());
-                sb.append(" Voice connection is now reported as ");
+                sb.append(" The voice connection is now reported as ");
                 sb.append(m.getGuild().getAudioManager().isConnected() ? "connected" : "closed");
                 sb.append(". ");
 
-                sb.append("Initial connection status was ").append(status.toString()).append(", ");
-                sb.append("current connection status is ").append(m.getGuild().getAudioManager().getConnectionStatus().toString());
-                sb.append(".");
+                sb.append("Initially, the connection status was reported as __").append(status.toString()).append("__, ");
+                sb.append("but it is currently reported as __").append(m.getGuild().getAudioManager().getConnectionStatus().toString());
+                sb.append("__.");
 
                 m.editMessage(sb.toString()).queue();
             }, 2, TimeUnit.SECONDS);
