@@ -45,7 +45,7 @@ public class AdminBroadcastCommand extends ChannelSubCommand {
     public void execute(final Message message, final String[] arguments, final String label) {
         final List<String> failed = new ArrayList<String>();
 
-        final String broadcast = "**THE ADMINISTRATORS OF HILDA HAVE ANNOUNCED THE FOLLOWING**\n" + Util.combineSplit(0, arguments, " ");
+        final String broadcast = "**THE ADMINISTRATORS OF HILDA HAVE ANNOUNCED THE FOLLOWING TO ALL SERVERS**\n" + Util.combineSplit(0, arguments, " ");
         final EmbedBuilder eb = new EmbedBuilder();
 
         eb.setTitle("Notice from administrators");

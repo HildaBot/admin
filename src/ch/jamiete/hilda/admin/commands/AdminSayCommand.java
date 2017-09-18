@@ -64,7 +64,7 @@ public class AdminSayCommand extends ChannelSubCommand {
             return;
         }
 
-        final String broadcast = "**THE ADMINISTRATORS OF HILDA HAVE ANNOUNCED THE FOLLOWING**\n" + Util.combineSplit(1, arguments, " ");
+        final String broadcast = "**THE ADMINISTRATORS OF HILDA HAVE ANNOUNCED THE FOLLOWING TO THIS SERVER**\n" + Util.combineSplit(1, arguments, " ");
         final EmbedBuilder eb = new EmbedBuilder();
 
         eb.setTitle("Notice from administrators");
