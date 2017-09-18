@@ -16,6 +16,7 @@
 package ch.jamiete.hilda.admin;
 
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -26,6 +27,7 @@ import ch.jamiete.hilda.admin.commands.ReportCommand;
 import ch.jamiete.hilda.admin.commands.SetupCommand;
 import ch.jamiete.hilda.admin.listeners.ServerJoinListener;
 import ch.jamiete.hilda.admin.log.LogReporter;
+import ch.jamiete.hilda.admin.runnables.MemoryMonitor;
 import ch.jamiete.hilda.configuration.Configuration;
 import ch.jamiete.hilda.music.MusicManager;
 import ch.jamiete.hilda.music.MusicPlugin;
@@ -114,6 +116,8 @@ public class AdminPlugin extends HildaPlugin {
         this.getHilda().getCommandManager().registerChannelCommand(new SetupCommand(this.getHilda(), this));
 
         this.getHilda().getBot().addEventListener(new ServerJoinListener(this));
+
+        this.getHilda().getExecutor().scheduleWithFixedDelay(new MemoryMonitor(this), 1, 1, TimeUnit.MINUTES);
 
         this.config = this.getHilda().getConfigurationManager().getConfiguration(this);
 
