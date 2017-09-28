@@ -183,6 +183,8 @@ public class AdminPlugin extends HildaPlugin {
 
             Hilda.getLogger().info("Ignored " + array.size() + " naughty users.");
         }
+
+        this.channel.sendMessage("Hello! Hilda has just started.").queue();
     }
 
 }
