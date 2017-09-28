@@ -58,7 +58,7 @@ public class ReportCommand extends ChannelCommand {
         this.plugin.getChannel().sendMessage(eb.build()).queue();
 
         if (message.getGuild().getSelfMember().hasPermission(message.getTextChannel(), Permission.MESSAGE_MANAGE)) {
-            message.delete().queue();
+            message.delete().reason("I automatically delete some command invocations. If you don't want this to happen, remove my manage messages permission in the channel.").queue();
         }
 
         message.getAuthor().openPrivateChannel().queue(channel -> channel.sendMessage("I have sent your report to the administrators who will review it shortly. Thanks!").queue());

@@ -38,15 +38,15 @@ public class OwnerInviteTask implements Runnable {
     public void run() {
         final Member self = this.guild.getMember(this.hilda.getBot().getSelfUser());
 
-        if (self.hasPermission(this.guild.getDefaultChannel(), Permission.CREATE_INSTANT_INVITE)) {
-            final Invite invite = this.guild.getDefaultChannel().createInvite().complete();
+        if (this.guild.getDefaultChannel() != null && self.hasPermission(this.guild.getDefaultChannel(), Permission.CREATE_INSTANT_INVITE)) {
+            final Invite invite = this.guild.getDefaultChannel().createInvite().reason("I created this invite because an administrator of Hilda requested one.").complete();
             this.message.getTextChannel().sendMessage("https://discord.gg/" + invite.getCode()).queue();
             return;
         }
 
         for (final TextChannel channel : this.guild.getTextChannels()) {
             if (self.hasPermission(channel, Permission.CREATE_INSTANT_INVITE)) {
-                final Invite invite = channel.createInvite().complete();
+                final Invite invite = channel.createInvite().reason("I created this invite because an administrator of Hilda requested one.").complete();
                 this.message.getTextChannel().sendMessage("https://discord.gg/" + invite.getCode()).queue();
                 return;
             }
