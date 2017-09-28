@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import java.util.Arrays;
@@ -24,14 +24,14 @@ import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminOverviewCommand extends ChannelSubCommand {
-    private long start = System.currentTimeMillis();
+class AdminOverviewCommand extends ChannelSubCommand {
+    private final long start = System.currentTimeMillis();
 
-    protected AdminOverviewCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+    AdminOverviewCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
         super(hilda, senior);
 
         this.setName("overview");
-        this.setAliases(Arrays.asList(new String[] { "vitals", "statistics", "stats" }));
+        this.setAliases(Arrays.asList("vitals", "statistics", "stats"));
         this.setDescription("Gets information about the bot.");
     }
 

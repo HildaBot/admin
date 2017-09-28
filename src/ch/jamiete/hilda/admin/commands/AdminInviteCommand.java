@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,10 +12,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
-import java.util.Arrays;
+import java.util.Collections;
+
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.runnables.OwnerInviteTask;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
@@ -23,13 +24,13 @@ import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminInviteCommand extends ChannelSubCommand {
+class AdminInviteCommand extends ChannelSubCommand {
 
-    protected AdminInviteCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+    AdminInviteCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
         super(hilda, senior);
 
         this.setName("invite");
-        this.setAliases(Arrays.asList(new String[] { "inv" }));
+        this.setAliases(Collections.singletonList("inv"));
         this.setDescription("Generates an invite link for a server.");
     }
 

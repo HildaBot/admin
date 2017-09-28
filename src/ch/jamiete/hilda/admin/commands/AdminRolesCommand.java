@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import ch.jamiete.hilda.Hilda;
@@ -26,9 +26,9 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
 
-public class AdminRolesCommand extends ChannelSubCommand {
+class AdminRolesCommand extends ChannelSubCommand {
 
-    protected AdminRolesCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+    AdminRolesCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
         super(hilda, senior);
 
         this.setName("roles");
@@ -37,7 +37,7 @@ public class AdminRolesCommand extends ChannelSubCommand {
 
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
-        Guild guild = null;
+        Guild guild;
 
         if (arguments.length == 1) {
             guild = this.hilda.getBot().getGuildById(arguments[0]);

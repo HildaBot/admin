@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.log;
 
 import java.util.Arrays;
@@ -25,8 +25,7 @@ import ch.jamiete.hilda.LogFormat;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 public class LogReporter extends Handler {
-    public static final List<Level> LEVELS = Collections.unmodifiableList(Arrays.asList(new Level[] { Level.WARNING, Level.SEVERE }));
-    private final String vowels = "aeiou";
+    private static final List<Level> LEVELS = Collections.unmodifiableList(Arrays.asList(Level.WARNING, Level.SEVERE));
     private final LogFormat formatter = new LogFormat();
     private final TextChannel channel;
     private boolean loud = false;
@@ -37,12 +36,10 @@ public class LogReporter extends Handler {
 
     @Override
     public void close() throws SecurityException {
-        return;
     }
 
     @Override
     public void flush() {
-        return;
     }
 
     public boolean getLoud() {
@@ -59,11 +56,11 @@ public class LogReporter extends Handler {
 
         sb.append("** Caught a");
 
-        if (this.vowels.indexOf(record.getLevel().getName().toLowerCase().charAt(0)) != -1) {
+        if ("aeiou".indexOf(record.getLevel().getName().toLowerCase().charAt(0)) != -1) {
             sb.append("n");
         }
 
-        sb.append(" " + record.getLevel().getName() + " record:**\n");
+        sb.append(" ").append(record.getLevel().getName()).append(" record:**\n");
         sb.append("`");
 
         for (String line : this.formatter.format(record).split("\n")) {

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import java.util.logging.Level;
@@ -34,14 +34,14 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.VoiceChannel;
 
-public class AdminStreamCommand extends ChannelSubCommand {
+class AdminStreamCommand extends ChannelSubCommand {
 
     private class LoadResults implements AudioLoadResultHandler {
         private final MusicServer server;
         private final Message message;
         private final Member member;
 
-        public LoadResults(final MusicServer server, final Message message) {
+        LoadResults(final MusicServer server, final Message message) {
             this.server = server;
             this.message = message;
             this.member = message.getGuild().getMember(message.getAuthor());

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin;
 
 import java.util.Iterator;
@@ -43,7 +43,6 @@ import net.dv8tion.jda.core.entities.TextChannel;
 public class AdminPlugin extends HildaPlugin {
     private Role role;
     private TextChannel channel;
-    private Configuration config;
     private LogReporter reporter;
     public boolean memory = true;
 
@@ -62,15 +61,7 @@ public class AdminPlugin extends HildaPlugin {
 
         final Member member = this.role.getGuild().getMember(message.getAuthor());
 
-        if (member == null) {
-            return false;
-        }
-
-        if (member.getRoles().contains(this.role)) {
-            return true;
-        }
-
-        return false;
+        return member != null && member.getRoles().contains(this.role);
     }
 
     public TextChannel getChannel() {
@@ -103,9 +94,9 @@ public class AdminPlugin extends HildaPlugin {
         mb.append(" ");
         mb.append("(" + guild.getId() + ")", Formatting.ITALICS);
         mb.append(" — ");
-        mb.append(guild.getMembers().size() + " members, ");
-        mb.append(guild.getTextChannels().size() + " text channels, ");
-        mb.append(guild.getVoiceChannels().size() + " voice channels");
+        mb.append(String.valueOf(guild.getMembers().size())).append(" members, ");
+        mb.append(String.valueOf(guild.getTextChannels().size())).append(" text channels, ");
+        mb.append(String.valueOf(guild.getVoiceChannels().size())).append(" voice channels");
 
         return mb.build().getContent();
     }
@@ -120,21 +111,21 @@ public class AdminPlugin extends HildaPlugin {
 
         this.getHilda().getExecutor().scheduleWithFixedDelay(new MemoryMonitor(this), 1, 1, TimeUnit.MINUTES);
 
-        this.config = this.getHilda().getConfigurationManager().getConfiguration(this);
+        Configuration config = this.getHilda().getConfigurationManager().getConfiguration(this);
 
-        if (this.config.get().get("role") == null) {
-            this.config.get().addProperty("role", "");
+        if (config.get().get("role") == null) {
+            config.get().addProperty("role", "");
             Hilda.getLogger().warning("No role specified.");
         }
 
-        if (this.config.get().get("log") == null) {
-            this.config.get().addProperty("log", "");
+        if (config.get().get("log") == null) {
+            config.get().addProperty("log", "");
             Hilda.getLogger().warning("No log specified.");
         }
 
-        this.config.save();
+        config.save();
 
-        final String cfg_role = this.config.get().get("role").getAsString();
+        final String cfg_role = config.get().get("role").getAsString();
 
         if (cfg_role.isEmpty()) {
             Hilda.getLogger().warning("No role specified.");
@@ -142,7 +133,7 @@ public class AdminPlugin extends HildaPlugin {
             this.role = this.getHilda().getBot().getRoleById(cfg_role);
         }
 
-        final String cfg_log = this.config.get().get("log").getAsString();
+        final String cfg_log = config.get().get("log").getAsString();
 
         if (cfg_log.isEmpty()) {
             Hilda.getLogger().warning("No log specified.");
@@ -176,10 +167,9 @@ public class AdminPlugin extends HildaPlugin {
         final JsonArray array = cfg.get().getAsJsonArray("users");
 
         if (array != null) {
-            final Iterator<JsonElement> iterator = array.iterator();
 
-            while (iterator.hasNext()) {
-                this.getHilda().getCommandManager().addIgnoredUser(iterator.next().getAsString());
+            for (JsonElement anArray : array) {
+                this.getHilda().getCommandManager().addIgnoredUser(anArray.getAsString());
             }
 
             Hilda.getLogger().info("Ignored " + array.size() + " naughty users.");

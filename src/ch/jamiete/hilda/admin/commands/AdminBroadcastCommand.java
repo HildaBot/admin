@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,12 +12,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
@@ -31,19 +32,19 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-public class AdminBroadcastCommand extends ChannelSubCommand {
+class AdminBroadcastCommand extends ChannelSubCommand {
 
     public AdminBroadcastCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
         super(hilda, senior);
 
         this.setName("broadcast");
-        this.setAliases(Arrays.asList(new String[] { "announce" }));
+        this.setAliases(Collections.singletonList("announce"));
         this.setDescription("Broadcasts an announcement to all servers.");
     }
 
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
-        final List<String> failed = new ArrayList<String>();
+        final List<String> failed = new ArrayList<>();
 
         final String broadcast = "**THE ADMINISTRATORS OF HILDA HAVE ANNOUNCED THE FOLLOWING TO ALL SERVERS**\n" + Util.combineSplit(0, arguments, " ");
         final EmbedBuilder eb = new EmbedBuilder();

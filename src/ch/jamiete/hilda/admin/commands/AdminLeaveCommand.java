@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import java.util.Arrays;
@@ -22,13 +22,13 @@ import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminLeaveCommand extends ChannelSubCommand {
+class AdminLeaveCommand extends ChannelSubCommand {
 
-    protected AdminLeaveCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+    AdminLeaveCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
         super(hilda, senior);
 
         this.setName("leave");
-        this.setAliases(Arrays.asList(new String[] { "quit", "part" }));
+        this.setAliases(Arrays.asList("quit", "part"));
         this.setDescription("Leaves a server.");
     }
 

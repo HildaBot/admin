@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import ch.jamiete.hilda.Hilda;
@@ -20,9 +20,9 @@ import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminExceptionCommand extends ChannelSubCommand {
+class AdminExceptionCommand extends ChannelSubCommand {
 
-    protected AdminExceptionCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+    AdminExceptionCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
         super(hilda, senior);
 
         this.setName("exception");

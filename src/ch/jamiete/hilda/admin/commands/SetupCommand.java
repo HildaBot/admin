@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import java.util.Arrays;
@@ -33,7 +33,7 @@ public class SetupCommand extends ChannelCommand {
         this.plugin = plugin;
 
         this.setName("setup");
-        this.setAliases(Arrays.asList(new String[] { "init", "initialise", "initialize" }));
+        this.setAliases(Arrays.asList("init", "initialise", "initialize"));
         this.setDescription("The initial setup for a non-configured server.");
         this.setMinimumPermission(Permission.ADMINISTRATOR);
         this.setHide(true);

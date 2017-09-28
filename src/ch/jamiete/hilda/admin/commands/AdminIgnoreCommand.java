@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,11 +12,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonPrimitive;
@@ -33,19 +33,35 @@ import net.dv8tion.jda.core.entities.User;
 
 public class AdminIgnoreCommand extends ChannelSubCommand {
     private enum IgnoreDirection {
-        IGNORE, UNIGNORE;
+        IGNORE, UNIGNORE
     }
 
     private final AdminPlugin plugin;
 
-    protected AdminIgnoreCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
+    AdminIgnoreCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
         super(hilda, senior);
 
         this.plugin = plugin;
 
         this.setName("ignore");
-        this.setAliases(Arrays.asList(new String[] { "unignore" }));
+        this.setAliases(Collections.singletonList("unignore"));
         this.setDescription("Manages ignored users.");
+    }
+
+    private List<String> getPieces(List<String> strings) {
+        final List<String> pieces = new ArrayList<>();
+
+        for (final String s : strings) {
+            final User u = this.hilda.getBot().getUserById(s);
+
+            if (u == null) {
+                pieces.add("<@!" + s + ">");
+            } else {
+                pieces.add(u.getAsMention() + " (" + Util.getName(u) + ")");
+            }
+        }
+
+        return pieces;
     }
 
     @Override
@@ -58,20 +74,7 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
             } else {
                 final MessageBuilder mb = new MessageBuilder();
                 mb.append("I'm currently ignoring ");
-
-                final List<String> pieces = new ArrayList<String>();
-
-                for (final String s : strings) {
-                    final User u = this.hilda.getBot().getUserById(s);
-
-                    if (u == null) {
-                        pieces.add("<@!" + s + ">");
-                    } else {
-                        pieces.add(u.getAsMention() + " (" + Util.getName(u) + ")");
-                    }
-                }
-
-                mb.append(Util.getAsList(pieces));
+                mb.append(Util.getAsList(this.getPieces(strings)));
                 mb.append(".");
                 this.reply(message, mb.build());
             }
@@ -84,7 +87,7 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
         }
 
         final IgnoreDirection direction = IgnoreDirection.valueOf(label.toUpperCase());
-        final List<String> ids = new ArrayList<String>();
+        final List<String> ids = new ArrayList<>();
 
         if (!message.getMentionedUsers().isEmpty()) {
             message.getMentionedUsers().forEach(u -> ids.add(u.getId()));
@@ -124,20 +127,7 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
         final MessageBuilder mb = new MessageBuilder();
 
         mb.append("OK, I'm ").append(direction == IgnoreDirection.IGNORE ? "now" : "no longer").append(" ignoring ");
-
-        final List<String> pieces = new ArrayList<String>();
-
-        for (final String id : ids) {
-            final User u = this.hilda.getBot().getUserById(id);
-
-            if (u == null) {
-                pieces.add("<@!" + id + ">");
-            } else {
-                pieces.add(u.getAsMention() + " (" + Util.getName(u) + ")");
-            }
-        }
-
-        mb.append(Util.getAsList(pieces));
+        mb.append(Util.getAsList(this.getPieces(ids)));
         mb.append(".");
 
         mb.buildAll(SplitPolicy.SPACE).forEach(m -> message.getChannel().sendMessage(m).queue());

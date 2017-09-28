@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import java.awt.Color;
@@ -27,9 +27,9 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-public class AdminSayCommand extends ChannelSubCommand {
+class AdminSayCommand extends ChannelSubCommand {
 
-    protected AdminSayCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+    AdminSayCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
         super(hilda, senior);
 
         this.setName("say");
@@ -43,7 +43,7 @@ public class AdminSayCommand extends ChannelSubCommand {
             return;
         }
 
-        Guild guild = null;
+        Guild guild;
 
         try {
             guild = this.hilda.getBot().getGuildById(arguments[0]);

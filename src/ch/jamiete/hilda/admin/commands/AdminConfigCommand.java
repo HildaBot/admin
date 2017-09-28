@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import java.util.Arrays;
@@ -26,16 +26,16 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-public class AdminConfigCommand extends ChannelSubCommand {
+class AdminConfigCommand extends ChannelSubCommand {
     private final AdminPlugin plugin;
 
-    protected AdminConfigCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
+    AdminConfigCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
         super(hilda, senior);
 
         this.plugin = plugin;
 
         this.setName("config");
-        this.setAliases(Arrays.asList(new String[] { "configure", "configuration" }));
+        this.setAliases(Arrays.asList("configure", "configuration"));
         this.setDescription("Manages the configuration for the admin plugin.");
     }
 

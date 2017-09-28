@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import java.util.List;
@@ -29,11 +29,11 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminMusicCommand extends ChannelSubCommand {
+class AdminMusicCommand extends ChannelSubCommand {
 
     private final AdminPlugin plugin;
 
-    public AdminMusicCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
+    AdminMusicCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
         super(hilda, senior);
 
         this.plugin = plugin;

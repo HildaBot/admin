@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2017 jamietech
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *******************************************************************************/
+ */
 package ch.jamiete.hilda.admin.commands;
 
 import java.util.Arrays;
@@ -25,7 +25,7 @@ import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 
-public class AdminServersCommand extends ChannelSubCommand {
+class AdminServersCommand extends ChannelSubCommand {
     private final AdminPlugin plugin;
 
     public AdminServersCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
@@ -34,7 +34,7 @@ public class AdminServersCommand extends ChannelSubCommand {
         this.plugin = plugin;
 
         this.setName("servers");
-        this.setAliases(Arrays.asList(new String[] { "server", "serverlist", "listservers" }));
+        this.setAliases(Arrays.asList("server", "serverlist", "listservers"));
         this.setDescription("Lists the servers Hilda is on.");
     }
 
@@ -42,7 +42,7 @@ public class AdminServersCommand extends ChannelSubCommand {
     public void execute(final Message message, final String[] arguments, final String label) {
         final MessageBuilder mb = new MessageBuilder();
 
-        mb.append("I'm on " + this.hilda.getBot().getGuilds().size() + " servers:\n");
+        mb.append("I'm on ").append(String.valueOf(this.hilda.getBot().getGuilds().size())).append(" servers:\n");
 
         for (final Guild guild : this.hilda.getBot().getGuilds()) {
             mb.append("\n");
