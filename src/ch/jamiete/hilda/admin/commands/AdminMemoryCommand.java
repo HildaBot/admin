@@ -16,6 +16,7 @@
 package ch.jamiete.hilda.admin.commands;
 
 import ch.jamiete.hilda.Hilda;
+import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.admin.AdminUtil;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
@@ -23,9 +24,12 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 
 public class AdminMemoryCommand extends ChannelSubCommand {
+    private AdminPlugin plugin;
 
-    protected AdminMemoryCommand(final Hilda hilda, final ChannelSeniorCommand senior) {
+    protected AdminMemoryCommand(final Hilda hilda, final ChannelSeniorCommand senior, final AdminPlugin plugin) {
         super(hilda, senior);
+
+        this.plugin = plugin;
 
         this.setName("memory");
         this.setDescription("Gets runtime statistics about memory usage.");
@@ -33,6 +37,12 @@ public class AdminMemoryCommand extends ChannelSubCommand {
 
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
+        if (arguments.length == 1 && arguments[0].equalsIgnoreCase("quiet")) {
+            this.plugin.memory = !this.plugin.memory;
+            this.reply(message, "OK, you will " + (this.plugin.memory ? "now" : "no longer") + " receive memory warnings!");
+            return;
+        }
+
         Runtime runtime = Runtime.getRuntime();
         EmbedBuilder eb = new EmbedBuilder();
 

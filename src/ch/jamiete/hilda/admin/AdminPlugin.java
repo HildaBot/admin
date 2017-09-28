@@ -45,6 +45,7 @@ public class AdminPlugin extends HildaPlugin {
     private TextChannel channel;
     private Configuration config;
     private LogReporter reporter;
+    public boolean memory = true;
 
     public AdminPlugin(final Hilda hilda) {
         super(hilda);

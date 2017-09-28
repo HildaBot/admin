@@ -15,6 +15,10 @@ public class MemoryMonitor implements Runnable {
 
     @Override
     public void run() {
+        if (!plugin.memory) {
+            return;
+        }
+
         Runtime runtime = Runtime.getRuntime();
         long used = runtime.maxMemory() - runtime.freeMemory();
         long total = runtime.maxMemory();
