@@ -19,6 +19,7 @@ import java.util.Arrays;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminUtil;
+import ch.jamiete.hilda.commands.ChannelCommand;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -63,7 +64,16 @@ class AdminOverviewCommand extends ChannelSubCommand {
 
         eb.addField("Plugins", String.valueOf(this.hilda.getPluginManager().getPlugins().size()), true);
 
-        eb.addField("Commands", String.valueOf(this.hilda.getCommandManager().getChannelCommands().size()), true);
+        int subcommands = 0;
+        for (ChannelCommand c : this.hilda.getCommandManager().getChannelCommands()) {
+            if (c instanceof ChannelSeniorCommand) {
+                subcommands += ((ChannelSeniorCommand) c).getSubcommands().size();
+            }
+        }
+        String commands = "";
+        commands += this.hilda.getCommandManager().getChannelCommands().size() + " base commands\n";
+        commands += subcommands + " subcommands";
+        eb.addField("Commands", commands, true);
 
         eb.addField("Command executions", String.valueOf(this.hilda.getCommandManager().getExecutions()), true);
 
