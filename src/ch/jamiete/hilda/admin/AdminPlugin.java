@@ -15,7 +15,6 @@
  */
 package ch.jamiete.hilda.admin;
 
-import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 import com.google.gson.JsonArray;
@@ -175,7 +174,9 @@ public class AdminPlugin extends HildaPlugin {
             Hilda.getLogger().info("Ignored " + array.size() + " naughty users.");
         }
 
-        this.channel.sendMessage("Hello! Hilda has just started.").queue();
+        if (this.channel != null) {
+            this.channel.sendMessage("Hello! Hilda has just started.").queue();
+        }
     }
 
 }
