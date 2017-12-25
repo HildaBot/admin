@@ -15,11 +15,6 @@
  */
 package ch.jamiete.hilda.admin.commands;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminUtil;
@@ -31,6 +26,10 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 class AdminBroadcastCommand extends ChannelSubCommand {
 
@@ -70,7 +69,7 @@ class AdminBroadcastCommand extends ChannelSubCommand {
         String response = "Sent notice!";
 
         if (!failed.isEmpty()) {
-            response += " Couldn't find a channel to send the notice to in " + Util.getAsList(failed);
+            response += " Couldn't find a channel to send the notice to in " + Util.getAsList(failed) + ".";
         }
 
         this.reply(message, response);
