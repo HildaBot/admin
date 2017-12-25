@@ -69,6 +69,12 @@ class AdminInfoCommand extends ChannelSubCommand {
         mb.replaceLast(", ", "");
         mb.append('\n');
 
+        mb.append("Channel:", Formatting.BOLD);
+        mb.append(' ');
+        final TextChannel ch = AdminUtil.getChannel(guild);
+        mb.append(ch == null ? "Error" : "#" + ch.getName());
+        mb.append('\n');
+
         mb.append("Permissions:", Formatting.BOLD);
         mb.append(' ');
 
