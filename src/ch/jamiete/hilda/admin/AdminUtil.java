@@ -22,17 +22,38 @@ import net.dv8tion.jda.core.entities.TextChannel;
 public class AdminUtil {
 
     /**
-     * Gets a text channel that the bot can speak in.
+     * Gets a text channel that the bot can speak in. <p>
+     * Defaults to the channel that has the most users that can speak.
      * @param guild The guild to check.
      * @return A text channel that the bot can speak in or null.
      */
     public static TextChannel getChannel(final Guild guild) {
+        TextChannel channel = null;
+        int highest = 0;
+
+        for (final TextChannel c : guild.getTextChannels()) {
+            if (!guild.getSelfMember().hasPermission(c, Permission.MESSAGE_WRITE)) {
+                continue;
+            }
+
+            int speak = (int) guild.getMembers().stream().filter(m -> c.canTalk(m)).count();
+
+            if (speak > highest) {
+                highest = speak;
+                channel = c;
+            }
+        }
+
+        if (channel != null) {
+            return channel;
+        }
+
         if (guild.getSelfMember().hasPermission(guild.getDefaultChannel(), Permission.MESSAGE_WRITE)) {
             return guild.getDefaultChannel();
         }
 
-        for (final TextChannel channel : guild.getTextChannels()) {
-            if (guild.getSelfMember().hasPermission(channel, Permission.MESSAGE_WRITE)) {
+        for (final TextChannel c : guild.getTextChannels()) {
+            if (guild.getSelfMember().hasPermission(c, Permission.MESSAGE_WRITE)) {
                 return channel;
             }
         }
