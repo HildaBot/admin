@@ -49,7 +49,7 @@ class AdminStreamCommand extends ChannelSubCommand {
 
         @Override
         public void loadFailed(final FriendlyException e) {
-            MusicManager.getLogger().log(Level.WARNING, "Couldn't load track", e);
+            Hilda.getLogger().log(Level.WARNING, "Couldn't load track", e);
             AdminStreamCommand.this.reply(this.message, "I couldn't load that track: " + e.getMessage() + ".");
             Hilda.getLogger().log(Level.WARNING, "Couldn't load track", e);
             this.server.prompt();
@@ -69,10 +69,10 @@ class AdminStreamCommand extends ChannelSubCommand {
 
         @Override
         public void trackLoaded(final AudioTrack track) {
-            MusicManager.getLogger().fine("Loaded a track");
+            Hilda.getLogger().fine("Loaded a track");
 
             if (this.server.isQueued(track)) {
-                MusicManager.getLogger().fine("Song already queued.");
+                Hilda.getLogger().fine("Song already queued.");
                 AdminStreamCommand.this.reply(this.message, "That song is already queued.");
                 this.server.prompt();
                 return;
@@ -104,7 +104,7 @@ class AdminStreamCommand extends ChannelSubCommand {
 
             AdminStreamCommand.this.reply(this.message, sb.toString());
             this.server.queue(new QueueItem(track, this.member.getUser().getId()));
-            MusicManager.getLogger().fine("Queued a song");
+            Hilda.getLogger().fine("Queued a song");
         }
 
     }
@@ -143,7 +143,7 @@ class AdminStreamCommand extends ChannelSubCommand {
         }
 
         // URL logic
-        MusicManager.getLogger().info("Attempting to load URL " + args[1]);
+        Hilda.getLogger().info("Attempting to load URL " + args[1]);
         message.getChannel().sendTyping().queue();
         this.plugin.getMusicManager().getAudioPlayerManager().loadItemOrdered(server.getPlayer(), args[1], new LoadResults(server, message));
     }
