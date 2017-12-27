@@ -38,23 +38,23 @@ class AdminOverviewCommand extends ChannelSubCommand {
 
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
-        Runtime runtime = Runtime.getRuntime();
-        EmbedBuilder eb = new EmbedBuilder();
+        final Runtime runtime = Runtime.getRuntime();
+        final EmbedBuilder eb = new EmbedBuilder();
 
         eb.setTitle("Hilda statistics");
 
         eb.addField("Servers", String.valueOf(this.hilda.getBot().getGuilds().size()), true);
 
-        long voice = this.hilda.getBot().getGuilds().stream().filter(g -> g.getAudioManager().isConnected()).count();
+        final long voice = this.hilda.getBot().getGuilds().stream().filter(g -> g.getAudioManager().isConnected()).count();
         eb.addField("Voice connections", String.valueOf(voice), true);
 
         eb.addField("Users", String.valueOf(this.hilda.getBot().getUsers().size()), true);
 
         eb.addField("Threads", String.valueOf(Thread.activeCount()), true);
 
-        long used = runtime.totalMemory() - runtime.freeMemory();
-        long total = runtime.totalMemory();
-        double percent = ((used * 1.0) / total) * 100;
+        final long used = runtime.totalMemory() - runtime.freeMemory();
+        final long total = runtime.totalMemory();
+        final double percent = used * 1.0 / total * 100;
 
         eb.addField("Per cent memory usage", Math.round(percent * 100.0) / 100.0 + "%", true);
         eb.addField("Current memory usage", AdminUtil.getFriendly(used, true), true);
@@ -65,7 +65,7 @@ class AdminOverviewCommand extends ChannelSubCommand {
         eb.addField("Plugins", String.valueOf(this.hilda.getPluginManager().getPlugins().size()), true);
 
         int subcommands = 0;
-        for (ChannelCommand c : this.hilda.getCommandManager().getChannelCommands()) {
+        for (final ChannelCommand c : this.hilda.getCommandManager().getChannelCommands()) {
             if (c instanceof ChannelSeniorCommand) {
                 subcommands += ((ChannelSeniorCommand) c).getSubcommands().size();
             }

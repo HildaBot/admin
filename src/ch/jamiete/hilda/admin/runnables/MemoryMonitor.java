@@ -25,20 +25,20 @@ import net.dv8tion.jda.core.EmbedBuilder;
 public class MemoryMonitor implements Runnable {
     private final AdminPlugin plugin;
 
-    public MemoryMonitor(AdminPlugin plugin) {
+    public MemoryMonitor(final AdminPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public void run() {
-        if (!plugin.memory) {
+        if (!this.plugin.memory) {
             return;
         }
 
-        Runtime runtime = Runtime.getRuntime();
-        long used = runtime.maxMemory() - runtime.freeMemory();
-        long total = runtime.maxMemory();
-        double percent = ((used * 1.0) / total) * 100;
+        final Runtime runtime = Runtime.getRuntime();
+        final long used = runtime.maxMemory() - runtime.freeMemory();
+        final long total = runtime.maxMemory();
+        final double percent = used * 1.0 / total * 100;
 
         Hilda.getLogger().fine("Memory usage currently at " + percent + "%");
 
@@ -46,7 +46,7 @@ public class MemoryMonitor implements Runnable {
             return;
         }
 
-        EmbedBuilder eb = new EmbedBuilder();
+        final EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle("Memory warning");
         eb.addField("Per cent memory usage", percent + "%", false);
         eb.setTimestamp(Instant.now());

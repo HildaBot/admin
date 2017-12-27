@@ -43,14 +43,14 @@ class AdminMemoryCommand extends ChannelSubCommand {
             return;
         }
 
-        Runtime runtime = Runtime.getRuntime();
-        EmbedBuilder eb = new EmbedBuilder();
+        final Runtime runtime = Runtime.getRuntime();
+        final EmbedBuilder eb = new EmbedBuilder();
 
         eb.setTitle("Memory usage");
 
-        long used = runtime.totalMemory() - runtime.freeMemory();
-        long total = runtime.totalMemory();
-        double percent = ((used * 1.0) / total) * 100;
+        final long used = runtime.totalMemory() - runtime.freeMemory();
+        final long total = runtime.totalMemory();
+        final double percent = used * 1.0 / total * 100;
 
         eb.addField("Per cent used", Math.round(percent * 100.0) / 100.0 + "%", false);
         eb.addField("Current memory usage", AdminUtil.getFriendly(used, true), true);

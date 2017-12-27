@@ -36,7 +36,7 @@ public class AdminUtil {
                 continue;
             }
 
-            int speak = (int) guild.getMembers().stream().filter(m -> c.canTalk(m)).count();
+            final int speak = (int) guild.getMembers().stream().filter(m -> c.canTalk(m)).count();
 
             if (speak > highest) {
                 highest = speak;
@@ -61,14 +61,15 @@ public class AdminUtil {
         return null;
     }
 
-    public static String getFriendly(long bytes, boolean si) {
-        int unit = si ? 1000 : 1024;
+    public static String getFriendly(final long bytes, final boolean si) {
+        final int unit = si ? 1000 : 1024;
 
-        if (bytes < unit)
+        if (bytes < unit) {
             return bytes + " B";
+        }
 
-        int exp = (int) (Math.log(bytes) / Math.log(unit));
-        String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (si ? "" : "i");
+        final int exp = (int) (Math.log(bytes) / Math.log(unit));
+        final String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (si ? "" : "i");
 
         return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }

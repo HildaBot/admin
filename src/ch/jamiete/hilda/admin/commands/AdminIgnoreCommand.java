@@ -48,22 +48,6 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
         this.setDescription("Manages ignored users.");
     }
 
-    private List<String> getPieces(List<String> strings) {
-        final List<String> pieces = new ArrayList<>();
-
-        for (final String s : strings) {
-            final User u = this.hilda.getBot().getUserById(s);
-
-            if (u == null) {
-                pieces.add("<@!" + s + ">");
-            } else {
-                pieces.add(u.getAsMention() + " (" + Util.getName(u) + ")");
-            }
-        }
-
-        return pieces;
-    }
-
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
         if (arguments.length == 1 && arguments[0].equalsIgnoreCase("list")) {
@@ -131,6 +115,22 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
         mb.append(".");
 
         mb.buildAll(SplitPolicy.SPACE).forEach(m -> message.getChannel().sendMessage(m).queue());
+    }
+
+    private List<String> getPieces(final List<String> strings) {
+        final List<String> pieces = new ArrayList<>();
+
+        for (final String s : strings) {
+            final User u = this.hilda.getBot().getUserById(s);
+
+            if (u == null) {
+                pieces.add("<@!" + s + ">");
+            } else {
+                pieces.add(u.getAsMention() + " (" + Util.getName(u) + ")");
+            }
+        }
+
+        return pieces;
     }
 
 }

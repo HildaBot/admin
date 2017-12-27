@@ -111,7 +111,7 @@ public class AdminPlugin extends HildaPlugin {
 
         this.getHilda().getExecutor().scheduleWithFixedDelay(new MemoryMonitor(this), 1, 1, TimeUnit.MINUTES);
 
-        Configuration config = this.getHilda().getConfigurationManager().getConfiguration(this);
+        final Configuration config = this.getHilda().getConfigurationManager().getConfiguration(this);
 
         if (config.get().get("role") == null) {
             config.get().addProperty("role", "");
@@ -145,7 +145,7 @@ public class AdminPlugin extends HildaPlugin {
             Hilda.getLogger().warning("Not currently configured correctly.");
         }
 
-        Logger global = Logger.getLogger("");
+        final Logger global = Logger.getLogger("");
 
         for (final Handler h : global.getHandlers()) {
             if (h instanceof LogReporter) {
@@ -162,7 +162,7 @@ public class AdminPlugin extends HildaPlugin {
 
         if (array != null) {
 
-            for (JsonElement anArray : array) {
+            for (final JsonElement anArray : array) {
                 this.getHilda().getCommandManager().addIgnoredUser(anArray.getAsString());
             }
 

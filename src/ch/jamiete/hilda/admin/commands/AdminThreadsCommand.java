@@ -18,9 +18,7 @@ package ch.jamiete.hilda.admin.commands;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
-import java.util.Arrays;
 import java.util.Collections;
-
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
@@ -41,15 +39,15 @@ class AdminThreadsCommand extends ChannelSubCommand {
 
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
-        MessageBuilder mb = new MessageBuilder();
+        final MessageBuilder mb = new MessageBuilder();
 
         mb.append("Thread information", Formatting.BOLD).append("\n");
 
         final ThreadMXBean thbean = ManagementFactory.getThreadMXBean();
         final long[] ids = thbean.getAllThreadIds();
 
-        for (long id : ids) {
-            ThreadInfo info = thbean.getThreadInfo(id);
+        for (final long id : ids) {
+            final ThreadInfo info = thbean.getThreadInfo(id);
 
             if (info == null) { // Thread died in intervening period
                 continue;

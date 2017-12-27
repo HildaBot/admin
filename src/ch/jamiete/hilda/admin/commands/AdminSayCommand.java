@@ -15,6 +15,7 @@
  */
 package ch.jamiete.hilda.admin.commands;
 
+import java.awt.Color;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminUtil;
@@ -25,7 +26,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
-import java.awt.Color;
 
 class AdminSayCommand extends ChannelSubCommand {
 
@@ -51,10 +51,10 @@ class AdminSayCommand extends ChannelSubCommand {
             // Ignore
         }
 
-        TextChannel ch =  null;
+        TextChannel ch = null;
 
         try {
-            ch  = this.hilda.getBot().getTextChannelById(arguments[0]);
+            ch = this.hilda.getBot().getTextChannelById(arguments[0]);
         } catch (final Exception e) {
             // Ignore
         }

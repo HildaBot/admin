@@ -16,7 +16,6 @@
 package ch.jamiete.hilda.admin.commands;
 
 import java.util.Collections;
-
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.runnables.OwnerInviteTask;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
