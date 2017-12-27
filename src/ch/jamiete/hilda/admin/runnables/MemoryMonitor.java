@@ -17,6 +17,8 @@
 package ch.jamiete.hilda.admin.runnables;
 
 import java.awt.Color;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminPlugin;
@@ -40,7 +42,10 @@ public class MemoryMonitor implements Runnable {
         final long total = runtime.maxMemory();
         final double percent = used * 1.0 / total * 100;
 
-        Hilda.getLogger().fine("Memory usage currently at " + percent + "%");
+        BigDecimal bd = new BigDecimal(String.valueOf(percent));
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+
+        Hilda.getLogger().fine("Memory usage currently at " + bd.doubleValue() + "%");
 
         if (percent < 90) {
             return;
@@ -48,7 +53,7 @@ public class MemoryMonitor implements Runnable {
 
         final EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle("Memory warning");
-        eb.addField("Per cent memory usage", percent + "%", false);
+        eb.addField("Per cent memory usage", bd.doubleValue() + "%", false);
         eb.setTimestamp(Instant.now());
 
         if (percent >= 90) {
