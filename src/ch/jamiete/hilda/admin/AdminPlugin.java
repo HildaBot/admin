@@ -97,7 +97,7 @@ public class AdminPlugin extends HildaPlugin {
         mb.append(String.valueOf(guild.getTextChannels().size())).append(" text channels, ");
         mb.append(String.valueOf(guild.getVoiceChannels().size())).append(" voice channels");
 
-        return mb.build().getContent();
+        return mb.build().getContentDisplay();
     }
 
     @Override

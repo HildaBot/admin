@@ -38,20 +38,22 @@ class AdminVoiceLeaveCommand extends ChannelSubCommand {
         message.getGuild().getAudioManager().closeAudioConnection();
 
         // Queue message and, once sent, in 2 seconds inform of close response.
-        message.getChannel().sendMessage("OK, I closed the audio connection.").queue((m) -> this.hilda.getExecutor().schedule(() -> {
-            final StringBuilder sb = new StringBuilder();
+        message.getChannel().sendMessage("OK, I closed the audio connection.").queue((m) -> {
+            this.hilda.getExecutor().schedule(() -> {
+                final StringBuilder sb = new StringBuilder();
 
-            sb.append(m.getRawContent());
-            sb.append(" The voice connection is now reported as ");
-            sb.append(m.getGuild().getAudioManager().isConnected() ? "connected" : "closed");
-            sb.append(". ");
+                sb.append(m.getContentRaw());
+                sb.append(" The voice connection is now reported as ");
+                sb.append(m.getGuild().getAudioManager().isConnected() ? "connected" : "closed");
+                sb.append(". ");
 
-            sb.append("Initially, the connection status was reported as __").append(status.toString()).append("__, ");
-            sb.append("but it is currently reported as __").append(m.getGuild().getAudioManager().getConnectionStatus().toString());
-            sb.append("__.");
+                sb.append("Initially, the connection status was reported as __").append(status.toString()).append("__, ");
+                sb.append("but it is currently reported as __").append(m.getGuild().getAudioManager().getConnectionStatus().toString());
+                sb.append("__.");
 
-            m.editMessage(sb.toString()).queue();
-        }, 2, TimeUnit.SECONDS));
+                m.editMessage(sb.toString()).queue();
+            }, 2, TimeUnit.SECONDS);
+        });
     }
 
 }
