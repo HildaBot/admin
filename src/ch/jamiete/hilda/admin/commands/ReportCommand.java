@@ -21,6 +21,7 @@ import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelCommand;
+import ch.jamiete.hilda.commands.CommandTranscendLevel;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
@@ -34,6 +35,7 @@ public class ReportCommand extends ChannelCommand {
         this.plugin = plugin;
 
         this.setName("report");
+        this.setTranscend(CommandTranscendLevel.ALL);
         this.setAliases(Arrays.asList("reports", "suggest", "suggestion", "suggestions"));
         this.setDescription("Report issues or suggestions to bot administrators.");
     }
