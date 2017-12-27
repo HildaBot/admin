@@ -31,7 +31,15 @@ class AdminExceptionCommand extends ChannelSubCommand {
 
     @Override
     public void execute(final Message message, final String[] arguments, final String label) {
-        throw new RuntimeException("There has not been an exception. This was called by an administrator.", new RuntimeException("There has not been an exception. This is a nested exception."));
+        RuntimeException e = new RuntimeException("There has not been an exception. This was called by an administrator.", new RuntimeException("There has not been an exception. This is a nested exception."));
+
+        if (arguments.length == 1) {
+            this.hilda.getExecutor().execute(() -> {
+                throw e;
+            });
+        } else {
+            throw e;
+        }
     }
 
 }
