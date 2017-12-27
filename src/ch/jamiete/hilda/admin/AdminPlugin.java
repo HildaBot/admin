@@ -17,6 +17,7 @@ package ch.jamiete.hilda.admin;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
+import java.util.logging.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import ch.jamiete.hilda.Hilda;
@@ -144,23 +145,17 @@ public class AdminPlugin extends HildaPlugin {
             Hilda.getLogger().warning("Not currently configured correctly.");
         }
 
-        for (final Handler h : Hilda.getLogger().getHandlers()) {
-            if (h instanceof LogReporter) {
-                h.close();
-                Hilda.getLogger().removeHandler(h);
-            }
-        }
+        Logger global = Logger.getLogger("");
 
-        for (final Handler h : MusicManager.getLogger().getHandlers()) {
+        for (final Handler h : global.getHandlers()) {
             if (h instanceof LogReporter) {
                 h.close();
-                MusicManager.getLogger().removeHandler(h);
+                global.removeHandler(h);
             }
         }
 
         this.reporter = new LogReporter(this.channel);
-        Hilda.getLogger().addHandler(this.reporter);
-        MusicManager.getLogger().addHandler(this.reporter);
+        global.addHandler(this.reporter);
 
         final Configuration cfg = this.getHilda().getConfigurationManager().getConfiguration(this, "ignoredusers");
         final JsonArray array = cfg.get().getAsJsonArray("users");
