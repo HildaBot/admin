@@ -34,6 +34,7 @@ public class AdminBaseCommand extends ChannelSeniorCommand {
         this.setDescription("Allows manipulation of servers.");
         this.setTranscend(CommandTranscendLevel.ALL);
 
+        this.registerSubcommand(new AdminAllowCommand(hilda, this, plugin));
         this.registerSubcommand(new AdminBroadcastCommand(hilda, this));
         this.registerSubcommand(new AdminConfigCommand(hilda, this, plugin));
         this.registerSubcommand(new AdminExceptionCommand(hilda, this));
