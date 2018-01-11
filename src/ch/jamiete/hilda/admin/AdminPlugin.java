@@ -102,6 +102,21 @@ public class AdminPlugin extends HildaPlugin {
     }
 
     @Override
+    public void onLoad() {
+        final Configuration servcfg = this.getHilda().getConfigurationManager().getConfiguration(this, "allowedservers");
+        final JsonArray servarr = servcfg.get().getAsJsonArray("servers");
+
+        if (servarr != null) {
+
+            for (final JsonElement elem : servarr) {
+                this.getHilda().addAllowedServer(elem.getAsString());
+            }
+
+            Hilda.getLogger().info("Allowed " + servarr.size() + " server IDs.");
+        }
+    }
+
+    @Override
     public void onEnable() {
         this.getHilda().getCommandManager().registerChannelCommand(new AdminBaseCommand(this.getHilda(), this));
         this.getHilda().getCommandManager().registerChannelCommand(new ReportCommand(this.getHilda(), this));
