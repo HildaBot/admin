@@ -15,10 +15,6 @@
  */
 package ch.jamiete.hilda.admin.commands;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminUtil;
@@ -30,6 +26,10 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 class AdminBroadcastCommand extends ChannelSubCommand {
 
@@ -45,7 +45,7 @@ class AdminBroadcastCommand extends ChannelSubCommand {
     public void execute(final Message message, final String[] arguments, final String label) {
         final List<String> failed = new ArrayList<>();
 
-        final String broadcast = "**THE ADMINISTRATORS OF HILDA HAVE ANNOUNCED THE FOLLOWING TO ALL SERVERS**\n" + Util.combineSplit(0, arguments, " ");
+        final String broadcast = "**THE ADMINISTRATORS OF " + this.hilda.getBot().getSelfUser().getName() + " HAVE ANNOUNCED THE FOLLOWING TO ALL SERVERS**\n" + Util.combineSplit(0, arguments, " ");
         final EmbedBuilder eb = new EmbedBuilder();
 
         eb.setTitle("Notice from administrators");

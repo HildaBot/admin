@@ -15,11 +15,6 @@
  */
 package ch.jamiete.hilda.admin;
 
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Handler;
-import java.util.logging.Logger;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Start;
 import ch.jamiete.hilda.admin.commands.AdminBaseCommand;
@@ -39,6 +34,11 @@ import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 public class AdminPlugin extends HildaPlugin {
     private Role role;
@@ -185,7 +185,7 @@ public class AdminPlugin extends HildaPlugin {
         }
 
         if (this.channel != null) {
-            this.channel.sendMessage("Hello! Hilda has just started.").queue();
+            this.channel.sendMessage("Hello! " + this.getHilda().getBot().getSelfUser().getName() + " has just started.").queue();
         }
     }
 

@@ -15,7 +15,6 @@
  */
 package ch.jamiete.hilda.admin.commands;
 
-import java.awt.Color;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminUtil;
@@ -26,6 +25,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
+import java.awt.Color;
 
 class AdminSayCommand extends ChannelSubCommand {
 
@@ -71,7 +71,7 @@ class AdminSayCommand extends ChannelSubCommand {
             return;
         }
 
-        final String broadcast = "**THE ADMINISTRATORS OF HILDA HAVE ANNOUNCED THE FOLLOWING TO THIS SERVER**\n" + Util.combineSplit(1, arguments, " ");
+        final String broadcast = "**THE ADMINISTRATORS OF " + this.hilda.getBot().getSelfUser().getName() + " HAVE ANNOUNCED THE FOLLOWING TO THIS SERVER**\n" + Util.combineSplit(1, arguments, " ");
         final EmbedBuilder eb = new EmbedBuilder();
 
         eb.setTitle("Notice from administrators");
