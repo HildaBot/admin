@@ -27,15 +27,11 @@ import ch.jamiete.hilda.configuration.Configuration;
 import ch.jamiete.hilda.music.MusicManager;
 import ch.jamiete.hilda.music.MusicPlugin;
 import ch.jamiete.hilda.plugins.HildaPlugin;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.MessageBuilder.Formatting;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.*;
+
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
@@ -71,7 +67,7 @@ public class AdminPlugin extends HildaPlugin {
     public MusicManager getMusicManager() {
         final HildaPlugin plugin = this.getHilda().getPluginManager().getPlugin("music");
 
-        if (plugin == null || !(plugin instanceof MusicPlugin)) {
+        if (!(plugin instanceof MusicPlugin)) {
             return null;
         }
 
@@ -90,9 +86,9 @@ public class AdminPlugin extends HildaPlugin {
     public String getServerInfo(final Guild guild) {
         final MessageBuilder mb = new MessageBuilder();
 
-        mb.append(guild.getName(), Formatting.BOLD);
+        mb.append(guild.getName(), MessageBuilder.Formatting.BOLD);
         mb.append(" ");
-        mb.append("(" + guild.getId() + ")", Formatting.ITALICS);
+        mb.append("(" + guild.getId() + ")", MessageBuilder.Formatting.ITALICS);
         mb.append(" — ");
         mb.append(String.valueOf(guild.getMembers().size())).append(" members, ");
         mb.append(String.valueOf(guild.getTextChannels().size())).append(" text channels, ");

@@ -20,14 +20,13 @@ import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminUtil;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.MessageBuilder.Formatting;
-import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
+import ch.jamiete.hilda.commands.ChannelSubCommand;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 class AdminInfoCommand extends ChannelSubCommand {
 
@@ -55,10 +54,10 @@ class AdminInfoCommand extends ChannelSubCommand {
 
         final MessageBuilder mb = new MessageBuilder();
 
-        mb.append("Server information", Formatting.UNDERLINE).append("\n");
+        mb.append("Server information", MessageBuilder.Formatting.UNDERLINE).append("\n");
         mb.append("For ").append(AdminUtil.getName(guild)).append("\n\n");
 
-        mb.append("Roles:", Formatting.BOLD);
+        mb.append("Roles:", MessageBuilder.Formatting.BOLD);
         mb.append(' ');
 
         for (final Role role : guild.getSelfMember().getRoles()) {
@@ -69,17 +68,17 @@ class AdminInfoCommand extends ChannelSubCommand {
         mb.replaceLast(", ", "");
         mb.append('\n');
 
-        mb.append("Channel:", Formatting.BOLD);
+        mb.append("Channel:", MessageBuilder.Formatting.BOLD);
         mb.append(' ');
         final TextChannel ch = AdminUtil.getChannel(guild);
         mb.append(ch == null ? "Error" : "#" + ch.getName());
         mb.append('\n');
 
-        mb.append("Permissions:", Formatting.BOLD);
+        mb.append("Permissions:", MessageBuilder.Formatting.BOLD);
         mb.append(' ');
 
         for (final Permission permission : Permission.getPermissions(Permission.ALL_GUILD_PERMISSIONS)) {
-            mb.append(permission.getName().toLowerCase().replace("_", ""), guild.getSelfMember().hasPermission(permission) ? Formatting.UNDERLINE : Formatting.STRIKETHROUGH);
+            mb.append(permission.getName().toLowerCase().replace("_", ""), guild.getSelfMember().hasPermission(permission) ? MessageBuilder.Formatting.UNDERLINE : MessageBuilder.Formatting.STRIKETHROUGH);
             mb.append(", ");
         }
 
@@ -87,16 +86,16 @@ class AdminInfoCommand extends ChannelSubCommand {
         mb.append('\n');
         mb.append('\n');
 
-        mb.append("Channels:", Formatting.BOLD);
+        mb.append("Channels:", MessageBuilder.Formatting.BOLD);
 
         for (final TextChannel channel : guild.getTextChannels()) {
             mb.append('\n');
             mb.append("    ");
-            mb.append(channel.getName(), Formatting.BOLD);
+            mb.append(channel.getName(), MessageBuilder.Formatting.BOLD);
             mb.append(": ");
 
             for (final Permission permission : Permission.getPermissions(Permission.ALL_TEXT_PERMISSIONS)) {
-                mb.append(permission.getName().toLowerCase().replace("_", ""), guild.getSelfMember().hasPermission(channel, permission) ? Formatting.UNDERLINE : Formatting.STRIKETHROUGH);
+                mb.append(permission.getName().toLowerCase().replace("_", ""), guild.getSelfMember().hasPermission(channel, permission) ? MessageBuilder.Formatting.UNDERLINE : MessageBuilder.Formatting.STRIKETHROUGH);
                 mb.append(", ");
             }
 
@@ -110,10 +109,10 @@ class AdminInfoCommand extends ChannelSubCommand {
         mb.append('\n');
         mb.append('\n');
 
-        mb.append("Owner:", Formatting.BOLD);
+        mb.append("Owner:", MessageBuilder.Formatting.BOLD);
         mb.append(" ").append(Util.getName(guild.getOwner())).append(" ").append(guild.getOwner().getUser().getId());
 
-        mb.buildAll(SplitPolicy.NEWLINE).forEach(m -> message.getChannel().sendMessage(m).queue());
+        mb.buildAll(MessageBuilder.SplitPolicy.NEWLINE).forEach(m -> message.getChannel().sendMessage(m).queue());
     }
 
 }

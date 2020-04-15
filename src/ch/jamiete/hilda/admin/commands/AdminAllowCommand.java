@@ -18,22 +18,21 @@ package ch.jamiete.hilda.admin.commands;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonPrimitive;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
 import ch.jamiete.hilda.configuration.Configuration;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonPrimitive;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
 
 public class AdminAllowCommand extends ChannelSubCommand {
     private enum AllowDirection {
-        ALLOW, DISALLOW;
+        ALLOW, DISALLOW
     }
 
     private final AdminPlugin plugin;
@@ -151,7 +150,7 @@ public class AdminAllowCommand extends ChannelSubCommand {
 
         mb.append(".");
 
-        mb.buildAll(SplitPolicy.SPACE).forEach(m -> message.getChannel().sendMessage(m).queue());
+        mb.buildAll(MessageBuilder.SplitPolicy.SPACE).forEach(m -> message.getChannel().sendMessage(m).queue());
     }
 
 }

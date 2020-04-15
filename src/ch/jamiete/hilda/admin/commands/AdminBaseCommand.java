@@ -19,7 +19,7 @@ import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.CommandTranscendLevel;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.api.entities.Message;
 
 public class AdminBaseCommand extends ChannelSeniorCommand {
     private final AdminPlugin plugin;

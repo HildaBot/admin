@@ -19,8 +19,8 @@ import java.util.concurrent.TimeUnit;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
-import net.dv8tion.jda.core.audio.hooks.ConnectionStatus;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.api.audio.hooks.ConnectionStatus;
+import net.dv8tion.jda.api.entities.Message;
 
 class AdminVoiceLeaveCommand extends ChannelSubCommand {
 
@@ -38,22 +38,17 @@ class AdminVoiceLeaveCommand extends ChannelSubCommand {
         message.getGuild().getAudioManager().closeAudioConnection();
 
         // Queue message and, once sent, in 2 seconds inform of close response.
-        message.getChannel().sendMessage("OK, I closed the audio connection.").queue((m) -> {
-            this.hilda.getExecutor().schedule(() -> {
-                final StringBuilder sb = new StringBuilder();
+        message.getChannel().sendMessage("OK, I closed the audio connection.").queue((m) -> this.hilda.getExecutor().schedule(() -> {
 
-                sb.append(m.getContentRaw());
-                sb.append(" The voice connection is now reported as ");
-                sb.append(m.getGuild().getAudioManager().isConnected() ? "connected" : "closed");
-                sb.append(". ");
-
-                sb.append("Initially, the connection status was reported as __").append(status.toString()).append("__, ");
-                sb.append("but it is currently reported as __").append(m.getGuild().getAudioManager().getConnectionStatus().toString());
-                sb.append("__.");
-
-                m.editMessage(sb.toString()).queue();
-            }, 2, TimeUnit.SECONDS);
-        });
+            String sb = m.getContentRaw() +
+                    " The voice connection is now reported as " +
+                    (m.getGuild().getAudioManager().isConnected() ? "connected" : "closed") +
+                    ". " +
+                    "Initially, the connection status was reported as __" + status.toString() + "__, " +
+                    "but it is currently reported as __" + m.getGuild().getAudioManager().getConnectionStatus().toString() +
+                    "__.";
+            m.editMessage(sb).queue();
+        }, 2, TimeUnit.SECONDS));
     }
 
 }

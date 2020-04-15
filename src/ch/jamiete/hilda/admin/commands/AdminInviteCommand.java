@@ -20,8 +20,8 @@ import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.runnables.OwnerInviteTask;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
 
 class AdminInviteCommand extends ChannelSubCommand {
 

@@ -26,10 +26,9 @@ import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
 import ch.jamiete.hilda.configuration.Configuration;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
 
 public class AdminIgnoreCommand extends ChannelSubCommand {
     private enum IgnoreDirection {
@@ -114,7 +113,7 @@ public class AdminIgnoreCommand extends ChannelSubCommand {
         mb.append(Util.getAsList(this.getPieces(ids)));
         mb.append(".");
 
-        mb.buildAll(SplitPolicy.SPACE).forEach(m -> message.getChannel().sendMessage(m).queue());
+        mb.buildAll(MessageBuilder.SplitPolicy.SPACE).forEach(m -> message.getChannel().sendMessage(m).queue());
     }
 
     private List<String> getPieces(final List<String> strings) {

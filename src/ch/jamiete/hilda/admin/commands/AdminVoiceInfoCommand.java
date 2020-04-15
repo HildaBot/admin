@@ -18,9 +18,9 @@ package ch.jamiete.hilda.admin.commands;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
 
 class AdminVoiceInfoCommand extends ChannelSubCommand {
 
@@ -40,7 +40,7 @@ class AdminVoiceInfoCommand extends ChannelSubCommand {
         audio.addField("Connected channel", String.valueOf(guild.getAudioManager().getConnectedChannel()), true);
         audio.addField("Connection status", String.valueOf(guild.getAudioManager().getConnectionStatus()), true);
         audio.addField("Queued channel", String.valueOf(guild.getAudioManager().getQueuedAudioConnection()), true);
-        audio.addField("Receive handler", String.valueOf(guild.getAudioManager().getReceiveHandler()), true);
+        audio.addField("Receive handler", String.valueOf(guild.getAudioManager().getReceivingHandler()), true);
         audio.addField("Send handler", String.valueOf(guild.getAudioManager().getSendingHandler()), true);
         audio.addField("Attempting to connect", String.valueOf(guild.getAudioManager().isAttemptingToConnect()), true);
         audio.addField("Connected", String.valueOf(guild.getAudioManager().isConnected()), true);

@@ -16,12 +16,8 @@
 package ch.jamiete.hilda.admin.runnables;
 
 import ch.jamiete.hilda.Hilda;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Invite;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.*;
 
 public class OwnerInviteTask implements Runnable {
     private final Hilda hilda;
@@ -40,7 +36,7 @@ public class OwnerInviteTask implements Runnable {
 
         if (this.guild.getDefaultChannel() != null && self.hasPermission(this.guild.getDefaultChannel(), Permission.CREATE_INSTANT_INVITE)) {
             final Invite invite = this.guild.getDefaultChannel().createInvite().reason("I created this invite because an administrator of Hilda requested one.").complete();
-            this.message.getTextChannel().sendMessage("https://discord.gg/" + invite.getCode()).queue();
+            this.message.getChannel().sendMessage("https://discord.gg/" + invite.getCode()).queue();
             return;
         }
 

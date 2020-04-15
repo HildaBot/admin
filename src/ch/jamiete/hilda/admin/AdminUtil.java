@@ -15,9 +15,9 @@
  */
 package ch.jamiete.hilda.admin;
 
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 public class AdminUtil {
 
@@ -36,7 +36,7 @@ public class AdminUtil {
                 continue;
             }
 
-            final int speak = (int) guild.getMembers().stream().filter(m -> c.canTalk(m)).count();
+            final int speak = (int) guild.getMembers().stream().filter(c::canTalk).count();
 
             if (speak > highest) {
                 highest = speak;

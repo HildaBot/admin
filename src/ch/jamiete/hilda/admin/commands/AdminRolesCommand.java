@@ -19,12 +19,10 @@ import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminUtil;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.MessageBuilder.Formatting;
-import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.Role;
 
 class AdminRolesCommand extends ChannelSubCommand {
 
@@ -52,25 +50,25 @@ class AdminRolesCommand extends ChannelSubCommand {
 
         final MessageBuilder mb = new MessageBuilder();
 
-        mb.append("Roles of " + AdminUtil.getName(guild), Formatting.BOLD);
+        mb.append("Roles of " + AdminUtil.getName(guild), MessageBuilder.Formatting.BOLD);
         mb.append('\n');
-        mb.append("Requested by " + message.getAuthor().getName(), Formatting.ITALICS);
+        mb.append("Requested by " + message.getAuthor().getName(), MessageBuilder.Formatting.ITALICS);
         mb.append('\n');
 
         for (final Role role : guild.getRoles()) {
             mb.append('\n');
 
             if (role.getName().equalsIgnoreCase("@everyone")) {
-                mb.append("\\@\u200Beveryone", Formatting.BOLD);
+                mb.append("\\@\u200Beveryone", MessageBuilder.Formatting.BOLD);
             } else {
-                mb.append(role.getName(), Formatting.BOLD);
+                mb.append(role.getName(), MessageBuilder.Formatting.BOLD);
             }
 
             mb.append(' ');
-            mb.append(role.getId(), Formatting.ITALICS);
+            mb.append(role.getId(), MessageBuilder.Formatting.ITALICS);
         }
 
-        mb.buildAll(SplitPolicy.NEWLINE).forEach(m -> message.getChannel().sendMessage(m).queue());
+        mb.buildAll(MessageBuilder.SplitPolicy.NEWLINE).forEach(m -> message.getChannel().sendMessage(m).queue());
     }
 
 }

@@ -22,7 +22,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import ch.jamiete.hilda.LogFormat;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 public class LogReporter extends Handler {
     private static final List<Level> LEVELS = Collections.unmodifiableList(Arrays.asList(Level.WARNING, Level.SEVERE));

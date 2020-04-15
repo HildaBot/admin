@@ -17,8 +17,8 @@ package ch.jamiete.hilda.admin.listeners;
 
 import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.events.EventHandler;
-import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
-import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 
 public class ServerJoinListener {
     private final AdminPlugin plugin;

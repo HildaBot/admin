@@ -20,10 +20,9 @@ import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
 
 class AdminServersCommand extends ChannelSubCommand {
     private final AdminPlugin plugin;
@@ -49,7 +48,7 @@ class AdminServersCommand extends ChannelSubCommand {
             mb.append(this.plugin.getServerInfo(guild));
         }
 
-        mb.buildAll(SplitPolicy.NEWLINE).forEach(m -> this.reply(message, m));
+        mb.buildAll(MessageBuilder.SplitPolicy.NEWLINE).forEach(m -> this.reply(message, m));
     }
 
 }

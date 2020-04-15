@@ -22,10 +22,8 @@ import java.util.Collections;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.MessageBuilder.Formatting;
-import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Message;
 
 class AdminThreadsCommand extends ChannelSubCommand {
 
@@ -41,7 +39,7 @@ class AdminThreadsCommand extends ChannelSubCommand {
     public void execute(final Message message, final String[] arguments, final String label) {
         final MessageBuilder mb = new MessageBuilder();
 
-        mb.append("Thread information", Formatting.BOLD).append("\n");
+        mb.append("Thread information", MessageBuilder.Formatting.BOLD).append("\n");
 
         final ThreadMXBean thbean = ManagementFactory.getThreadMXBean();
         final long[] ids = thbean.getAllThreadIds();
@@ -55,12 +53,12 @@ class AdminThreadsCommand extends ChannelSubCommand {
 
             mb.append("\n");
 
-            mb.append(info.getThreadName(), Formatting.BOLD).append(" ");
+            mb.append(info.getThreadName(), MessageBuilder.Formatting.BOLD).append(" ");
             mb.append(info.getThreadId()).append(" (");
             mb.append(info.getThreadState().toString()).append(")");
         }
 
-        mb.buildAll(SplitPolicy.NEWLINE).forEach(m -> this.reply(message, m));
+        mb.buildAll(MessageBuilder.SplitPolicy.NEWLINE).forEach(m -> this.reply(message, m));
     }
 
 }

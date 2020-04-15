@@ -22,9 +22,9 @@ import ch.jamiete.hilda.Util;
 import ch.jamiete.hilda.admin.AdminPlugin;
 import ch.jamiete.hilda.commands.ChannelCommand;
 import ch.jamiete.hilda.commands.CommandTranscendLevel;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Message;
 
 public class ReportCommand extends ChannelCommand {
     private final AdminPlugin plugin;

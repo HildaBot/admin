@@ -18,8 +18,8 @@ package ch.jamiete.hilda.admin.commands;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.commands.ChannelSeniorCommand;
 import ch.jamiete.hilda.commands.ChannelSubCommand;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 class AdminRecallCommand extends ChannelSubCommand {
 
@@ -48,7 +48,7 @@ class AdminRecallCommand extends ChannelSubCommand {
             return;
         }
 
-        channel.getMessageById(arguments.length == 2 ? arguments[1] : arguments[0]).queue(m -> {
+        channel.retrieveMessageById(arguments.length == 2 ? arguments[1] : arguments[0]).queue(m -> {
             if (m.getAuthor() == this.hilda.getBot().getSelfUser()) {
                 m.delete().queue();
                 this.reply(message, "Deleted.");
