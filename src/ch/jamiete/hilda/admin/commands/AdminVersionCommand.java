@@ -8,14 +8,17 @@ import ch.jamiete.hilda.plugins.PluginData;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Properties;
 
 public class AdminVersionCommand extends ChannelSubCommand {
-    private Hilda hilda;
-
     AdminVersionCommand(Hilda hilda, ChannelSeniorCommand senior) {
         super(hilda, senior);
-        this.hilda = hilda;
+
+        this.setName("version");
+        this.setAliases(Collections.singletonList("versions"));
+        this.setDescription("Lists the versions of plugins and the underlying architecture.");
     }
 
     @Override
@@ -40,5 +43,7 @@ public class AdminVersionCommand extends ChannelSubCommand {
             PluginData data = plugin.getPluginData();
             eb.addField(data.getName(), "Version: " + data.getVersion() + "\nAuthor: " + data.getAuthor(), true);
         }
+
+        this.reply(message, eb.build());
     }
 }

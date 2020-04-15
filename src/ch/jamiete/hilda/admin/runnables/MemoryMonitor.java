@@ -22,7 +22,7 @@ import java.math.RoundingMode;
 import java.time.Instant;
 import ch.jamiete.hilda.Hilda;
 import ch.jamiete.hilda.admin.AdminPlugin;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 public class MemoryMonitor implements Runnable {
     private final AdminPlugin plugin;
